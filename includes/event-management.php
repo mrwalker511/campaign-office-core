@@ -500,15 +500,19 @@ class CP_Event_Manager {
 
         // Identify or Create Contact
         global $cp_contact_manager;
-        $contact_id = $cp_contact_manager->find_or_create(array(
-            'first_name' => $first_name,
-            'last_name'  => $last_name,
-            'email'      => $email,
-            'phone'      => sanitize_text_field($_POST['phone'] ?? ''),
-        ));
+        $contact_id = null;
 
-        if (is_wp_error($contact_id)) {
-            wp_send_json_error(array('message' => $contact_id->get_error_message()));
+        if ($cp_contact_manager && method_exists($cp_contact_manager, 'find_or_create')) {
+            $contact_id = $cp_contact_manager->find_or_create(array(
+                'first_name' => $first_name,
+                'last_name'  => $last_name,
+                'email'      => $email,
+                'phone'      => sanitize_text_field($_POST['phone'] ?? ''),
+            ));
+
+            if (is_wp_error($contact_id)) {
+                wp_send_json_error(array('message' => $contact_id->get_error_message()));
+            }
         }
 
         // Sanitize input data

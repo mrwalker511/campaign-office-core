@@ -131,15 +131,16 @@ class CP_Volunteer_Manager {
             return;
         }
 
-        $css_file = CAMPAIGNPRESS_THEME_DIR . '/assets/css/volunteer-admin.css';
-        $js_file = CAMPAIGNPRESS_THEME_DIR . '/assets/js/volunteer-admin.js';
+        // Use plugin directory for assets
+        $css_file = CAMPAIGN_OFFICE_CORE_PLUGIN_DIR . 'assets/css/volunteer-admin.css';
+        $js_file = CAMPAIGN_OFFICE_CORE_PLUGIN_DIR . 'assets/js/volunteer-admin.js';
 
         if (file_exists($css_file)) {
-            wp_enqueue_style('cp-volunteer-admin', CAMPAIGNPRESS_ASSETS_URI . '/css/volunteer-admin.css', array(), CAMPAIGNPRESS_VERSION);
+            wp_enqueue_style('cp-volunteer-admin', CAMPAIGN_OFFICE_CORE_PLUGIN_URL . 'assets/css/volunteer-admin.css', array(), CAMPAIGN_OFFICE_CORE_VERSION);
         }
 
         if (file_exists($js_file)) {
-            wp_enqueue_script('cp-volunteer-admin', CAMPAIGNPRESS_ASSETS_URI . '/js/volunteer-admin.js', array('jquery'), CAMPAIGNPRESS_VERSION, true);
+            wp_enqueue_script('cp-volunteer-admin', CAMPAIGN_OFFICE_CORE_PLUGIN_URL . 'assets/js/volunteer-admin.js', array('jquery'), CAMPAIGN_OFFICE_CORE_VERSION, true);
         }
     }
 
@@ -311,19 +312,23 @@ class CP_Volunteer_Manager {
 
         // Identify or Create Contact
         global $cp_contact_manager;
-        $contact_id = $cp_contact_manager->find_or_create(array(
-            'first_name'    => sanitize_text_field($_POST['first_name']),
-            'last_name'     => sanitize_text_field($_POST['last_name']),
-            'email'         => sanitize_email($_POST['email']),
-            'phone'         => isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '',
-            'address_line1' => isset($_POST['address']) ? sanitize_text_field($_POST['address']) : '',
-            'city'          => isset($_POST['city']) ? sanitize_text_field($_POST['city']) : '',
-            'state'         => isset($_POST['state']) ? strtoupper(sanitize_text_field($_POST['state'])) : '',
-            'zip_code'      => isset($_POST['zip']) ? sanitize_text_field($_POST['zip']) : '',
-        ));
+        $contact_id = null;
 
-        if (is_wp_error($contact_id)) {
-            wp_send_json_error(array('message' => $contact_id->get_error_message()));
+        if ($cp_contact_manager && method_exists($cp_contact_manager, 'find_or_create')) {
+            $contact_id = $cp_contact_manager->find_or_create(array(
+                'first_name'    => sanitize_text_field($_POST['first_name']),
+                'last_name'     => sanitize_text_field($_POST['last_name']),
+                'email'         => sanitize_email($_POST['email']),
+                'phone'         => isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '',
+                'address_line1' => isset($_POST['address']) ? sanitize_text_field($_POST['address']) : '',
+                'city'          => isset($_POST['city']) ? sanitize_text_field($_POST['city']) : '',
+                'state'         => isset($_POST['state']) ? strtoupper(sanitize_text_field($_POST['state'])) : '',
+                'zip_code'      => isset($_POST['zip']) ? sanitize_text_field($_POST['zip']) : '',
+            ));
+
+            if (is_wp_error($contact_id)) {
+                wp_send_json_error(array('message' => $contact_id->get_error_message()));
+            }
         }
 
         // Sanitize volunteer-specific data

@@ -1,0 +1,143 @@
+/**
+ * Campaign Office Core - Volunteer Admin Styles
+ *
+ * @package Campaign_Office_Core
+ * @since 1.0.0
+ */
+
+/* Status Badges */
+.cp-status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.cp-status-new {
+    background: #e5f5ff;
+    color: #0073aa;
+}
+
+.cp-status-contacted {
+    background: #fff4e5;
+    color: #f56e28;
+}
+
+.cp-status-active {
+    background: #e8f5e9;
+    color: #46b450;
+}
+
+.cp-status-inactive {
+    background: #f1f1f1;
+    color: #666;
+}
+
+/* Volunteer Cards */
+.cp-volunteer-stats {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.cp-stat-card {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 20px;
+    min-width: 150px;
+    text-align: center;
+}
+
+.cp-stat-card .stat-number {
+    font-size: 32px;
+    font-weight: 600;
+    color: #1d2327;
+    display: block;
+}
+
+.cp-stat-card .stat-label {
+    font-size: 13px;
+    color: #646970;
+}
+
+/* Volunteer Details View */
+.cp-volunteer-details {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.cp-volunteer-details h3 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+.cp-volunteer-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.cp-volunteer-meta dt {
+    font-weight: 600;
+    color: #1d2327;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.cp-volunteer-meta dd {
+    margin: 5px 0 15px 0;
+    color: #50575e;
+}
+
+/* Interests and Skills */
+.cp-tag {
+    display: inline-block;
+    background: #f0f0f1;
+    color: #1d2327;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin: 2px;
+}
+
+/* Notes Section */
+.cp-volunteer-notes {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #c3c4c7;
+}
+
+.cp-volunteer-notes textarea {
+    width: 100%;
+    min-height: 100px;
+}
+
+/* Quick Actions */
+.cp-quick-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.cp-quick-actions .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+    .cp-volunteer-stats {
+        flex-direction: column;
+    }
+
+    .cp-volunteer-meta {
+        grid-template-columns: 1fr;
+    }
+}

@@ -109,6 +109,9 @@ class Campaign_Office_Core {
      * Include required files
      */
     private function includes() {
+        // Contact manager must load first (other modules depend on it)
+        require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'contact-manager.php';
+
         // Core functionality files
         require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'custom-post-types.php';
         require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'volunteer-management.php';
