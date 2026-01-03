@@ -116,6 +116,7 @@ class Campaign_Office_Core {
         require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'custom-post-types.php';
         require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'volunteer-management.php';
         require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'event-management.php';
+        require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'event-calendar-enhancements.php';
     }
 
     /**
