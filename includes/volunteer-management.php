@@ -159,6 +159,12 @@ class CP_Volunteer_Manager {
             'submit_text' => __('Sign Me Up!', 'campaign-office-core'),
         ), $atts);
 
+        // Allow themes/plugins to modify shortcode attributes
+        $atts = apply_filters('cp_volunteer_form_atts', $atts);
+
+        // Action hook before form rendering
+        do_action('cp_before_volunteer_form_render', $atts);
+
         ob_start();
         ?>
         <div class="cp-volunteer-form-wrapper">
@@ -287,6 +293,9 @@ class CP_Volunteer_Manager {
         });
         </script>
         <?php
+
+        // Action hook after form rendering
+        do_action('cp_after_volunteer_form_render', $atts);
 
         return ob_get_clean();
     }

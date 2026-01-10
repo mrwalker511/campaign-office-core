@@ -3,7 +3,7 @@
  * Plugin Name: Campaign Office Core
  * Plugin URI: https://github.com/mrwalker511/campaign-office-core
  * Description: Core functionality for the Campaign Office theme. Provides custom post types, volunteer management, event management, and campaign-specific features that persist across theme changes.
- * Version: 1.0.0
+ * Version: 2.0.0
  * Author: Matt Walker
  * Author URI: https://github.com/mrwalker511
  * License: GPL v2 or later
@@ -33,7 +33,7 @@ class Campaign_Office_Core {
      *
      * @var string
      */
-    const VERSION = '1.0.0';
+    const VERSION = '2.0.0';
 
     /**
      * Singleton instance
