@@ -415,45 +415,7 @@ class CP_Event_Manager {
             </form>
         </div>
 
-        <script>
-        jQuery(document).ready(function($) {
-            $('.cp-event-rsvp-form').on('submit', function(e) {
-                e.preventDefault();
-
-                var $form = $(this);
-                var $message = $form.find('.cp-form-message');
-                var $submitBtn = $form.find('.cp-rsvp-submit-btn');
-
-                $submitBtn.prop('disabled', true).text('<?php esc_html_e('Submitting...', 'campaign-office-core'); ?>');
-
-                var formData = new FormData($form[0]);
-                formData.append('action', 'cp_submit_event_rsvp');
-                formData.append('event_id', $form.data('event-id'));
-
-                $.ajax({
-                    url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        if (response.success) {
-                            $message.html('<div class="cp-success-message">' + response.data.message + '</div>');
-                            $form[0].reset();
-                        } else {
-                            $message.html('<div class="cp-error-message">' + response.data.message + '</div>');
-                        }
-                    },
-                    error: function() {
-                        $message.html('<div class="cp-error-message"><?php esc_html_e('An error occurred. Please try again.', 'campaign-office-core'); ?></div>');
-                    },
-                    complete: function() {
-                        $submitBtn.prop('disabled', false).text('<?php esc_html_e('Submit RSVP', 'campaign-office-core'); ?>');
-                    }
-                });
-            });
-        });
-        </script>
+        // Script moved to assets/js/frontend.js
         <?php
 
         return ob_get_clean();

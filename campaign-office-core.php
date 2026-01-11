@@ -103,6 +103,9 @@ class Campaign_Office_Core {
 
         // Theme integration
         add_action('after_setup_theme', array($this, 'theme_integration'), 20);
+
+        // Enqueue frontend assets
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_assets'));
     }
 
     /**
@@ -203,6 +206,31 @@ class Campaign_Office_Core {
      */
     public function get_plugin_url() {
         return $this->plugin_url;
+    }
+
+    /**
+     * Enqueue frontend assets
+     */
+    public function enqueue_frontend_assets() {
+        wp_enqueue_style(
+            'campaign-office-core',
+            $this->plugin_url . 'assets/css/frontend.css',
+            array(),
+            self::VERSION
+        );
+
+        wp_enqueue_script(
+            'campaign-office-core',
+            $this->plugin_url . 'assets/js/frontend.js',
+            array('jquery'),
+            self::VERSION,
+            true
+        );
+
+        wp_localize_script('campaign-office-core', 'campaignOfficeCore', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'calendarNonce' => wp_create_nonce('cp_calendar_events')
+        ));
     }
 }
 

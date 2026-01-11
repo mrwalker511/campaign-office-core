@@ -251,47 +251,7 @@ class CP_Volunteer_Manager {
             </form>
         </div>
 
-        <script>
-        jQuery(document).ready(function($) {
-            $('.cp-volunteer-signup-form').on('submit', function(e) {
-                e.preventDefault();
-
-                var $form = $(this);
-                var $message = $form.find('.cp-form-message');
-                var $submitBtn = $form.find('.cp-volunteer-submit-btn');
-
-                // Disable submit button
-                $submitBtn.prop('disabled', true).text('<?php esc_html_e('Submitting...', 'campaign-office-core'); ?>');
-
-                // Collect form data
-                var formData = new FormData($form[0]);
-                formData.append('action', 'cp_submit_volunteer_signup');
-                formData.append('opportunity_id', $form.data('opportunity-id'));
-
-                $.ajax({
-                    url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        if (response.success) {
-                            $message.html('<div class="cp-success-message">' + response.data.message + '</div>');
-                            $form[0].reset();
-                        } else {
-                            $message.html('<div class="cp-error-message">' + response.data.message + '</div>');
-                        }
-                    },
-                    error: function() {
-                        $message.html('<div class="cp-error-message"><?php esc_html_e('An error occurred. Please try again.', 'campaign-office-core'); ?></div>');
-                    },
-                    complete: function() {
-                        $submitBtn.prop('disabled', false).text('<?php echo esc_js($atts['submit_text']); ?>');
-                    }
-                });
-            });
-        });
-        </script>
+        // Script moved to assets/js/frontend.js
         <?php
 
         // Action hook after form rendering

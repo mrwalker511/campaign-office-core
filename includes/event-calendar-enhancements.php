@@ -47,7 +47,7 @@ class CP_Event_Calendar_Enhancements {
         add_filter('the_content', array($this, 'append_ical_download'));
 
         // Enqueue frontend assets
-        add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_assets'));
+        // Frontend assets are now loaded by the main plugin class
 
         // Add admin menu
         add_action('admin_menu', array($this, 'add_admin_menu'));
@@ -523,151 +523,11 @@ class CP_Event_Calendar_Enhancements {
     }
 
     /**
-     * Enqueue frontend assets
+     * Frontend assets are now loaded by the main plugin class
+     * Styles moved to assets/css/frontend.css
+     * Scripts moved to assets/js/frontend.js
      */
-    public function enqueue_frontend_assets() {
-        wp_add_inline_style('wp-block-library', $this->get_calendar_styles());
-        
-        // Add inline script with nonce for calendar AJAX
-        wp_add_inline_script('jquery', 'var cpCalendarNonce = "' . wp_create_nonce('cp_calendar_events') . '";', 'after');
-    }
 
-    /**
-     * Get calendar inline styles
-     */
-    private function get_calendar_styles() {
-        return '
-        .cp-event-calendar {
-            margin: 2rem 0;
-            background: #fff;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .cp-calendar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-        }
-        .cp-calendar-title {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        .cp-calendar-prev, .cp-calendar-next {
-            background: none;
-            border: 1px solid #ddd;
-            padding: 0.5rem;
-            cursor: pointer;
-            border-radius: 0.25rem;
-        }
-        .cp-calendar-view-switcher {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .cp-view-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid #ddd;
-            background: #f9f9f9;
-            cursor: pointer;
-            border-radius: 0.25rem;
-        }
-        .cp-view-btn.active {
-            background: var(--wp--preset--color--primary, #0073aa);
-            color: #fff;
-            border-color: var(--wp--preset--color--primary, #0073aa);
-        }
-        .cp-calendar-month {
-            width: 100%;
-        }
-        .cp-calendar-weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
-            background: #ddd;
-            border: 1px solid #ddd;
-        }
-        .cp-weekday {
-            background: #f5f5f5;
-            padding: 0.75rem;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-        .cp-calendar-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
-            background: #ddd;
-            border: 1px solid #ddd;
-            border-top: none;
-        }
-        .cp-calendar-day {
-            background: #fff;
-            min-height: 100px;
-            padding: 0.5rem;
-            position: relative;
-        }
-        .cp-calendar-day.cp-day-empty {
-            background: #fafafa;
-        }
-        .cp-calendar-day.cp-day-today {
-            background: #e3f2fd;
-        }
-        .cp-day-number {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        .cp-day-events {
-            font-size: 0.75rem;
-        }
-        .cp-day-event {
-            display: block;
-            padding: 0.125rem 0.25rem;
-            margin-bottom: 0.125rem;
-            background: var(--wp--preset--color--primary, #0073aa);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 0.125rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .cp-calendar-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .cp-list-event {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem;
-            background: #f9f9f9;
-            border-radius: 0.5rem;
-        }
-        .cp-event-date {
-            font-weight: 600;
-            min-width: 120px;
-        }
-        .cp-event-map-wrapper {
-            margin: 2rem 0;
-        }
-        .cp-event-map {
-            border-radius: 0.5rem;
-            overflow: hidden;
-        }
-        .cp-map-address {
-            margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .cp-ical-download {
-            margin-top: 2rem;
-        }
-        ';
-    }
 }
 
 // Initialize event calendar enhancements

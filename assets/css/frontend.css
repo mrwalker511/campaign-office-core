@@ -1,0 +1,393 @@
+/**
+ * Campaign Office Core Frontend CSS
+ */
+
+/* =========================================
+   General Form Styles
+   ========================================= */
+.cp-volunteer-form-wrapper,
+.cp-event-rsvp-wrapper {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.cp-form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.cp-form-group {
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.cp-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.cp-form-group input[type="text"],
+.cp-form-group input[type="email"],
+.cp-form-group input[type="tel"],
+.cp-form-group input[type="number"],
+.cp-form-group input[type="date"],
+.cp-form-group textarea,
+.cp-form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.cp-form-group input:focus,
+.cp-form-group textarea:focus,
+.cp-form-group select:focus {
+    outline: none;
+    border-color: var(--wp--preset--color--primary, #0073aa);
+    box-shadow: 0 0 0 2px rgba(0, 115, 170, 0.1);
+}
+
+.cp-checkbox-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.cp-checkbox-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+.cp-form-message {
+    margin: 1rem 0;
+}
+
+.cp-success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    padding: 0.75rem 1.25rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
+
+.cp-error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 0.75rem 1.25rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
+
+.cp-volunteer-submit-btn,
+.cp-rsvp-submit-btn {
+    display: inline-block;
+    background: var(--wp--preset--color--primary, #0073aa);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.cp-volunteer-submit-btn:hover,
+.cp-rsvp-submit-btn:hover {
+    background: var(--wp--preset--color--primary-dark, #005177);
+    opacity: 0.9;
+}
+
+.cp-volunteer-submit-btn:disabled,
+.cp-rsvp-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.required {
+    color: #dc3232;
+}
+
+/* Event Specifics */
+.cp-event-full {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.cp-capacity-info {
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .cp-form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+/* =========================================
+   Calendar Styles
+   ========================================= */
+.cp-event-calendar {
+    margin: 2rem 0;
+    background: #fff;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cp-calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.cp-calendar-title {
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.cp-calendar-prev, .cp-calendar-next {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cp-calendar-prev:hover, .cp-calendar-next:hover {
+    background-color: #f0f0f0;
+}
+
+.cp-calendar-view-switcher {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+}
+
+.cp-view-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.cp-view-btn.active {
+    background: var(--wp--preset--color--primary, #0073aa);
+    color: #fff;
+    border-color: var(--wp--preset--color--primary, #0073aa);
+}
+
+.cp-calendar-month,
+.cp-calendar-week {
+    width: 100%;
+}
+
+.cp-calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #e0e0e0;
+    border: 1px solid #e0e0e0;
+}
+
+.cp-weekday {
+    background: #f5f5f5;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.cp-calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #e0e0e0;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+}
+
+.cp-calendar-day {
+    background: #fff;
+    min-height: 100px;
+    padding: 0.5rem;
+    position: relative;
+}
+
+.cp-calendar-day.cp-day-empty {
+    background: #fafafa;
+}
+
+.cp-calendar-day.cp-day-today {
+    background: #e3f2fd;
+}
+
+.cp-day-number {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.cp-day-events {
+    font-size: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cp-day-event {
+    display: block;
+    padding: 4px 6px;
+    background: var(--wp--preset--color--primary, #0073aa);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+.cp-day-event:hover {
+    opacity: 0.9;
+    color: #fff;
+}
+
+.cp-more-events {
+    display: block;
+    color: #666;
+    font-size: 0.7rem;
+    margin-top: 2px;
+    text-align: center;
+}
+
+.cp-calendar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cp-list-event {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    align-items: center;
+}
+
+.cp-event-date {
+    font-weight: 700;
+    min-width: 120px;
+    color: var(--wp--preset--color--primary, #0073aa);
+    text-align: center;
+    border-right: 1px solid #eee;
+    padding-right: 1.5rem;
+}
+
+.cp-event-details h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.cp-event-details h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.cp-event-location {
+    margin: 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.cp-event-map-wrapper {
+    margin: 2rem 0;
+}
+
+.cp-event-map {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cp-map-address {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.cp-ical-download {
+    margin-top: 2rem;
+}
+
+/* Responsive Calendar */
+@media (max-width: 768px) {
+    .cp-calendar-weekdays,
+    .cp-calendar-days {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .cp-calendar-weekdays {
+        display: none;
+    }
+    
+    .cp-calendar-day {
+        min-height: auto;
+    }
+
+    .cp-day-number::after {
+        content: " " attr(data-date);
+        font-weight: normal;
+        margin-left: 0.5rem;
+    }
+    
+    .cp-calendar-day.cp-day-empty {
+        display: none;
+    }
+
+    .cp-list-event {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .cp-event-date {
+        border-right: none;
+        padding-right: 0;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.5rem;
+        width: 100%;
+    }
+}
