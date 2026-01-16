@@ -543,8 +543,8 @@ function cp_save_event_meta($post_id) {
 add_action('save_post_cp_event', 'cp_save_event_meta');
 
 /**
- * Flush rewrite rules on theme activation
+ * Flush rewrite rules
  *
- * Note: Moved to functions.php using after_setup_theme hook
- * because register_activation_hook() doesn't work in themes.
+ * Note: CPTs are automatically registered via register_post_type() calls
+ * hooked to 'init'. Rewrite rules are flushed on plugin activation/deactivation.
  */

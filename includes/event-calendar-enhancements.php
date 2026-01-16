@@ -446,7 +446,7 @@ class CP_Event_Calendar_Enhancements {
 
         $ical = "BEGIN:VCALENDAR\r\n";
         $ical .= "VERSION:2.0\r\n";
-        $ical .= "PRODID:-//CampaignPress//Event Calendar//EN\r\n";
+        $ical .= "PRODID:-//CampaignOfficeCore//Event Calendar//EN\r\n";
         $ical .= "BEGIN:VEVENT\r\n";
         $ical .= "UID:" . $event->ID . "@" . get_bloginfo('url') . "\r\n";
         $ical .= "DTSTAMP:" . $created . "\r\n";

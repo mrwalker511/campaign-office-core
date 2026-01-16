@@ -348,8 +348,9 @@ class CP_Contact_Manager {
     }
 }
 
-// Initialize singleton instance
-CP_Contact_Manager::instance();
+// Initialize singleton instance and make globally accessible
+global $cp_contact_manager;
+$cp_contact_manager = CP_Contact_Manager::instance();
 
 /**
  * Helper function to get contact manager instance

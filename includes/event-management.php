@@ -35,7 +35,7 @@ class CP_Event_Manager {
         $this->rsvp_table_name = $wpdb->prefix . 'cp_event_rsvps';
 
         // Database setup
-        add_action('after_setup_theme', array($this, 'create_rsvp_table'));
+        add_action('init', array($this, 'create_rsvp_table'));
 
         // Meta boxes for event settings
         add_action('add_meta_boxes', array($this, 'add_event_meta_boxes'));
@@ -428,11 +428,6 @@ class CP_Event_Manager {
         // Verify nonce
         if (!isset($_POST['cp_event_rsvp_nonce']) || !wp_verify_nonce($_POST['cp_event_rsvp_nonce'], 'cp_event_rsvp')) {
             wp_send_json_error(array('message' => __('Security verification failed.', 'campaign-office-core')));
-        }
-
-        // Rate limiting: 10 RSVPs per hour per IP
-        if (function_exists('campaignpress_is_rate_limited') && campaignpress_is_rate_limited('event_rsvp', 10, 3600)) {
-            wp_send_json_error(array('message' => __('Too many RSVP submissions. Please try again later.', 'campaign-office-core')));
         }
 
         $event_id = absint($_POST['event_id'] ?? 0);
