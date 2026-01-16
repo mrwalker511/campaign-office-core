@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom Post Types for CampaignPress
+ * Custom Post Types for Campaign Office
  *
  * Registers political-specific custom post types:
  * - Issues/Policy Positions
@@ -9,7 +9,7 @@
  * - Team Members
  * - Volunteer Opportunities
  *
- * @package CampaignPress
+ * @package Campaign_Office_Core
  * @since 1.0.0
  */
 
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 /**
  * Register Issues Custom Post Type
  */
-function campaignpress_register_issues_post_type() {
+function cp_register_issues_post_type() {
     $labels = array(
         'name'                  => _x('Issues', 'Post Type General Name', 'campaign-office-core'),
         'singular_name'         => _x('Issue', 'Post Type Singular Name', 'campaign-office-core'),
@@ -105,12 +105,12 @@ function campaignpress_register_issues_post_type() {
 
     register_taxonomy('issue_category', array('cp_issue'), $tax_args);
 }
-add_action('init', 'campaignpress_register_issues_post_type', 0);
+add_action('init', 'cp_register_issues_post_type', 0);
 
 /**
  * Register Events Custom Post Type
  */
-function campaignpress_register_events_post_type() {
+function cp_register_events_post_type() {
     $labels = array(
         'name'                  => _x('Events', 'Post Type General Name', 'campaign-office-core'),
         'singular_name'         => _x('Event', 'Post Type Singular Name', 'campaign-office-core'),
@@ -191,12 +191,12 @@ function campaignpress_register_events_post_type() {
 
     register_taxonomy('event_type', array('cp_event'), $tax_args);
 }
-add_action('init', 'campaignpress_register_events_post_type', 0);
+add_action('init', 'cp_register_events_post_type', 0);
 
 /**
  * Register Endorsements Custom Post Type
  */
-function campaignpress_register_endorsements_post_type() {
+function cp_register_endorsements_post_type() {
     $labels = array(
         'name'                  => _x('Endorsements', 'Post Type General Name', 'campaign-office-core'),
         'singular_name'         => _x('Endorsement', 'Post Type Singular Name', 'campaign-office-core'),
@@ -251,12 +251,12 @@ function campaignpress_register_endorsements_post_type() {
 
     register_post_type('cp_endorsement', $args);
 }
-add_action('init', 'campaignpress_register_endorsements_post_type', 0);
+add_action('init', 'cp_register_endorsements_post_type', 0);
 
 /**
  * Register Team Members Custom Post Type
  */
-function campaignpress_register_team_post_type() {
+function cp_register_team_post_type() {
     $labels = array(
         'name'                  => _x('Team Members', 'Post Type General Name', 'campaign-office-core'),
         'singular_name'         => _x('Team Member', 'Post Type Singular Name', 'campaign-office-core'),
@@ -311,12 +311,12 @@ function campaignpress_register_team_post_type() {
 
     register_post_type('cp_team', $args);
 }
-add_action('init', 'campaignpress_register_team_post_type', 0);
+add_action('init', 'cp_register_team_post_type', 0);
 
 /**
  * Register Volunteer Opportunities Custom Post Type
  */
-function campaignpress_register_volunteer_post_type() {
+function cp_register_volunteer_post_type() {
     $labels = array(
         'name'                  => _x('Volunteer Opportunities', 'Post Type General Name', 'campaign-office-core'),
         'singular_name'         => _x('Volunteer Opportunity', 'Post Type Singular Name', 'campaign-office-core'),
@@ -371,12 +371,12 @@ function campaignpress_register_volunteer_post_type() {
 
     register_post_type('cp_volunteer', $args);
 }
-add_action('init', 'campaignpress_register_volunteer_post_type', 0);
+add_action('init', 'cp_register_volunteer_post_type', 0);
 
 /**
  * Register Press Releases Custom Post Type
  */
-function campaignpress_register_press_release_post_type() {
+function cp_register_press_release_post_type() {
     $labels = array(
         'name'                  => _x('Press Releases', 'Post Type General Name', 'campaign-office-core'),
         'singular_name'         => _x('Press Release', 'Post Type Singular Name', 'campaign-office-core'),
@@ -431,28 +431,28 @@ function campaignpress_register_press_release_post_type() {
 
     register_post_type('cp_press_release', $args);
 }
-add_action('init', 'campaignpress_register_press_release_post_type', 0);
+add_action('init', 'cp_register_press_release_post_type', 0);
 
 /**
  * Add custom meta boxes for event details
  */
-function campaignpress_add_event_meta_boxes() {
+function cp_add_event_meta_boxes() {
     add_meta_box(
         'cp_event_details',
         __('Event Details', 'campaign-office-core'),
-        'campaignpress_event_details_callback',
+        'cp_event_details_callback',
         'cp_event',
         'normal',
         'high'
     );
 }
-add_action('add_meta_boxes', 'campaignpress_add_event_meta_boxes');
+add_action('add_meta_boxes', 'cp_add_event_meta_boxes');
 
 /**
  * Event details meta box callback
  */
-function campaignpress_event_details_callback($post) {
-    wp_nonce_field('campaignpress_event_details_nonce', 'campaignpress_event_details_nonce_field');
+function cp_event_details_callback($post) {
+    wp_nonce_field('cp_event_details_nonce', 'cp_event_details_nonce_field');
 
     $event_date = get_post_meta($post->ID, '_cp_event_date', true);
     $event_time = get_post_meta($post->ID, '_cp_event_time', true);
@@ -502,10 +502,10 @@ function campaignpress_event_details_callback($post) {
 /**
  * Save event meta data
  */
-function campaignpress_save_event_meta($post_id) {
+function cp_save_event_meta($post_id) {
     // Check nonce
-    if (!isset($_POST['campaignpress_event_details_nonce_field']) ||
-        !wp_verify_nonce($_POST['campaignpress_event_details_nonce_field'], 'campaignpress_event_details_nonce')) {
+    if (!isset($_POST['cp_event_details_nonce_field']) ||
+        !wp_verify_nonce($_POST['cp_event_details_nonce_field'], 'cp_event_details_nonce')) {
         return;
     }
 
@@ -540,7 +540,7 @@ function campaignpress_save_event_meta($post_id) {
         }
     }
 }
-add_action('save_post_cp_event', 'campaignpress_save_event_meta');
+add_action('save_post_cp_event', 'cp_save_event_meta');
 
 /**
  * Flush rewrite rules on theme activation
