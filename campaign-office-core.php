@@ -101,8 +101,8 @@ class Campaign_Office_Core {
         // Load plugin textdomain
         add_action('plugins_loaded', array($this, 'load_textdomain'));
 
-        // Theme integration
-        add_action('after_setup_theme', array($this, 'theme_integration'), 20);
+        // Plugin integration (allows themes to hook into plugin functionality)
+        add_action('plugins_loaded', array($this, 'theme_integration'), 20);
 
         // Enqueue frontend assets
         add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_assets'));
