@@ -23,6 +23,13 @@ if (!defined('ABSPATH')) {
 class CP_Contact_Manager {
 
     /**
+     * Singleton instance
+     *
+     * @var CP_Contact_Manager
+     */
+    private static $instance = null;
+
+    /**
      * Database table name for contacts
      *
      * @var string
@@ -30,9 +37,21 @@ class CP_Contact_Manager {
     private $table_name;
 
     /**
+     * Get singleton instance
+     *
+     * @return CP_Contact_Manager
+     */
+    public static function instance() {
+        if (is_null(self::$instance)) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    /**
      * Constructor
      */
-    public function __construct() {
+    private function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'cp_contacts';
 
@@ -329,6 +348,14 @@ class CP_Contact_Manager {
     }
 }
 
-// Initialize and make globally available
-global $cp_contact_manager;
-$cp_contact_manager = new CP_Contact_Manager();
+// Initialize singleton instance
+CP_Contact_Manager::instance();
+
+/**
+ * Helper function to get contact manager instance
+ *
+ * @return CP_Contact_Manager
+ */
+function cp_contact_manager() {
+    return CP_Contact_Manager::instance();
+}
