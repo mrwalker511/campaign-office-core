@@ -4,7 +4,7 @@
  *
  * Provides RSVP capture, recurring events, and event analytics for the free version.
  *
- * @package CampaignPress
+ * @package Campaign_Office_Core
  * @since 2.0.0
  */
 

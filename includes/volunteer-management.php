@@ -5,7 +5,7 @@
  * Provides volunteer data capture, contact management, and basic CRM functionality for the free version.
  * Volunteers can sign up through forms, and campaign staff can manage contacts in the admin.
  *
- * @package CampaignPress
+ * @package Campaign_Office_Core
  * @since 2.0.0
  */
 
@@ -36,8 +36,8 @@ class CP_Volunteer_Manager {
         $this->table_name = $wpdb->prefix . 'cp_volunteers';
 
         // Database setup - only create tables when needed
-        add_action('after_switch_theme', array($this, 'maybe_create_volunteer_table'));
         add_action('admin_init', array($this, 'maybe_create_volunteer_table'));
+        add_action('plugins_loaded', array($this, 'maybe_create_volunteer_table'));
 
         // Admin menu
         add_action('admin_menu', array($this, 'add_admin_menu'));

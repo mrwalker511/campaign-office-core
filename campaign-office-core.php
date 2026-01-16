@@ -210,8 +210,42 @@ class Campaign_Office_Core {
 
     /**
      * Enqueue frontend assets
+     * 
+     * Only loads assets when needed (on CPT pages or when shortcodes are present)
      */
     public function enqueue_frontend_assets() {
+        global $post;
+        
+        $should_load = false;
+        
+        // Load on single CPT pages
+        if (is_singular(['cp_event', 'cp_volunteer', 'cp_issue', 'cp_endorsement', 'cp_team', 'cp_press_release'])) {
+            $should_load = true;
+        }
+        
+        // Load on CPT archives
+        if (is_post_type_archive(['cp_event', 'cp_volunteer', 'cp_issue', 'cp_endorsement', 'cp_team', 'cp_press_release'])) {
+            $should_load = true;
+        }
+        
+        // Check for shortcodes in post content
+        if (isset($post->post_content)) {
+            $shortcodes = ['cp_volunteer_form', 'cp_event_rsvp', 'cp_event_calendar', 'cp_event_map'];
+            foreach ($shortcodes as $shortcode) {
+                if (has_shortcode($post->post_content, $shortcode)) {
+                    $should_load = true;
+                    break;
+                }
+            }
+        }
+        
+        // Allow themes/plugins to force loading
+        $should_load = apply_filters('campaign_office_core_load_assets', $should_load);
+        
+        if (!$should_load) {
+            return;
+        }
+        
         wp_enqueue_style(
             'campaign-office-core',
             $this->plugin_url . 'assets/css/frontend.css',

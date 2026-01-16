@@ -3,7 +3,7 @@
  * Advanced Event Calendar Enhancements
  *
  * Adds calendar grid views, iCal export, and Google Maps integration
- * to the existing CampaignPress event management system.
+ * to the existing Campaign Office event management system.
  *
  * Features:
  * - Calendar grid views (month, week, day)
