@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom Post Types for Campaign Office
+ * Custom Post Types for CampaignPress
  *
  * Registers political-specific custom post types:
  * - Issues/Policy Positions
@@ -9,7 +9,7 @@
  * - Team Members
  * - Volunteer Opportunities
  *
- * @package Campaign_Office_Core
+ * @package CampaignPress_Core
  * @since 1.0.0
  */
 
@@ -23,38 +23,38 @@ if (!defined('ABSPATH')) {
  */
 function cp_register_issues_post_type() {
     $labels = array(
-        'name'                  => _x('Issues', 'Post Type General Name', 'campaign-office-core'),
-        'singular_name'         => _x('Issue', 'Post Type Singular Name', 'campaign-office-core'),
-        'menu_name'             => __('Issues', 'campaign-office-core'),
-        'name_admin_bar'        => __('Issue', 'campaign-office-core'),
-        'archives'              => __('Issue Archives', 'campaign-office-core'),
-        'attributes'            => __('Issue Attributes', 'campaign-office-core'),
-        'parent_item_colon'     => __('Parent Issue:', 'campaign-office-core'),
-        'all_items'             => __('All Issues', 'campaign-office-core'),
-        'add_new_item'          => __('Add New Issue', 'campaign-office-core'),
-        'add_new'               => __('Add New', 'campaign-office-core'),
-        'new_item'              => __('New Issue', 'campaign-office-core'),
-        'edit_item'             => __('Edit Issue', 'campaign-office-core'),
-        'update_item'           => __('Update Issue', 'campaign-office-core'),
-        'view_item'             => __('View Issue', 'campaign-office-core'),
-        'view_items'            => __('View Issues', 'campaign-office-core'),
-        'search_items'          => __('Search Issue', 'campaign-office-core'),
-        'not_found'             => __('Not found', 'campaign-office-core'),
-        'not_found_in_trash'    => __('Not found in Trash', 'campaign-office-core'),
-        'featured_image'        => __('Featured Image', 'campaign-office-core'),
-        'set_featured_image'    => __('Set featured image', 'campaign-office-core'),
-        'remove_featured_image' => __('Remove featured image', 'campaign-office-core'),
-        'use_featured_image'    => __('Use as featured image', 'campaign-office-core'),
-        'insert_into_item'      => __('Insert into issue', 'campaign-office-core'),
-        'uploaded_to_this_item' => __('Uploaded to this issue', 'campaign-office-core'),
-        'items_list'            => __('Issues list', 'campaign-office-core'),
-        'items_list_navigation' => __('Issues list navigation', 'campaign-office-core'),
-        'filter_items_list'     => __('Filter issues list', 'campaign-office-core'),
+        'name'                  => _x('Issues', 'Post Type General Name', 'campaignpress-core'),
+        'singular_name'         => _x('Issue', 'Post Type Singular Name', 'campaignpress-core'),
+        'menu_name'             => __('Issues', 'campaignpress-core'),
+        'name_admin_bar'        => __('Issue', 'campaignpress-core'),
+        'archives'              => __('Issue Archives', 'campaignpress-core'),
+        'attributes'            => __('Issue Attributes', 'campaignpress-core'),
+        'parent_item_colon'     => __('Parent Issue:', 'campaignpress-core'),
+        'all_items'             => __('All Issues', 'campaignpress-core'),
+        'add_new_item'          => __('Add New Issue', 'campaignpress-core'),
+        'add_new'               => __('Add New', 'campaignpress-core'),
+        'new_item'              => __('New Issue', 'campaignpress-core'),
+        'edit_item'             => __('Edit Issue', 'campaignpress-core'),
+        'update_item'           => __('Update Issue', 'campaignpress-core'),
+        'view_item'             => __('View Issue', 'campaignpress-core'),
+        'view_items'            => __('View Issues', 'campaignpress-core'),
+        'search_items'          => __('Search Issue', 'campaignpress-core'),
+        'not_found'             => __('Not found', 'campaignpress-core'),
+        'not_found_in_trash'    => __('Not found in Trash', 'campaignpress-core'),
+        'featured_image'        => __('Featured Image', 'campaignpress-core'),
+        'set_featured_image'    => __('Set featured image', 'campaignpress-core'),
+        'remove_featured_image' => __('Remove featured image', 'campaignpress-core'),
+        'use_featured_image'    => __('Use as featured image', 'campaignpress-core'),
+        'insert_into_item'      => __('Insert into issue', 'campaignpress-core'),
+        'uploaded_to_this_item' => __('Uploaded to this issue', 'campaignpress-core'),
+        'items_list'            => __('Issues list', 'campaignpress-core'),
+        'items_list_navigation' => __('Issues list navigation', 'campaignpress-core'),
+        'filter_items_list'     => __('Filter issues list', 'campaignpress-core'),
     );
 
     $args = array(
-        'label'                 => __('Issue', 'campaign-office-core'),
-        'description'           => __('Policy positions and campaign issues', 'campaign-office-core'),
+        'label'                 => __('Issue', 'campaignpress-core'),
+        'description'           => __('Policy positions and campaign issues', 'campaignpress-core'),
         'labels'                => $labels,
         'supports'              => array('title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'custom-fields'),
         'taxonomies'            => array('issue_category'),
@@ -80,17 +80,17 @@ function cp_register_issues_post_type() {
 
     // Register Issue Categories taxonomy
     $tax_labels = array(
-        'name'              => _x('Issue Categories', 'taxonomy general name', 'campaign-office-core'),
-        'singular_name'     => _x('Issue Category', 'taxonomy singular name', 'campaign-office-core'),
-        'search_items'      => __('Search Issue Categories', 'campaign-office-core'),
-        'all_items'         => __('All Issue Categories', 'campaign-office-core'),
-        'parent_item'       => __('Parent Issue Category', 'campaign-office-core'),
-        'parent_item_colon' => __('Parent Issue Category:', 'campaign-office-core'),
-        'edit_item'         => __('Edit Issue Category', 'campaign-office-core'),
-        'update_item'       => __('Update Issue Category', 'campaign-office-core'),
-        'add_new_item'      => __('Add New Issue Category', 'campaign-office-core'),
-        'new_item_name'     => __('New Issue Category Name', 'campaign-office-core'),
-        'menu_name'         => __('Categories', 'campaign-office-core'),
+        'name'              => _x('Issue Categories', 'taxonomy general name', 'campaignpress-core'),
+        'singular_name'     => _x('Issue Category', 'taxonomy singular name', 'campaignpress-core'),
+        'search_items'      => __('Search Issue Categories', 'campaignpress-core'),
+        'all_items'         => __('All Issue Categories', 'campaignpress-core'),
+        'parent_item'       => __('Parent Issue Category', 'campaignpress-core'),
+        'parent_item_colon' => __('Parent Issue Category:', 'campaignpress-core'),
+        'edit_item'         => __('Edit Issue Category', 'campaignpress-core'),
+        'update_item'       => __('Update Issue Category', 'campaignpress-core'),
+        'add_new_item'      => __('Add New Issue Category', 'campaignpress-core'),
+        'new_item_name'     => __('New Issue Category Name', 'campaignpress-core'),
+        'menu_name'         => __('Categories', 'campaignpress-core'),
     );
 
     $tax_args = array(
@@ -112,38 +112,38 @@ add_action('init', 'cp_register_issues_post_type', 0);
  */
 function cp_register_events_post_type() {
     $labels = array(
-        'name'                  => _x('Events', 'Post Type General Name', 'campaign-office-core'),
-        'singular_name'         => _x('Event', 'Post Type Singular Name', 'campaign-office-core'),
-        'menu_name'             => __('Events', 'campaign-office-core'),
-        'name_admin_bar'        => __('Event', 'campaign-office-core'),
-        'archives'              => __('Event Archives', 'campaign-office-core'),
-        'attributes'            => __('Event Attributes', 'campaign-office-core'),
-        'parent_item_colon'     => __('Parent Event:', 'campaign-office-core'),
-        'all_items'             => __('All Events', 'campaign-office-core'),
-        'add_new_item'          => __('Add New Event', 'campaign-office-core'),
-        'add_new'               => __('Add New', 'campaign-office-core'),
-        'new_item'              => __('New Event', 'campaign-office-core'),
-        'edit_item'             => __('Edit Event', 'campaign-office-core'),
-        'update_item'           => __('Update Event', 'campaign-office-core'),
-        'view_item'             => __('View Event', 'campaign-office-core'),
-        'view_items'            => __('View Events', 'campaign-office-core'),
-        'search_items'          => __('Search Event', 'campaign-office-core'),
-        'not_found'             => __('Not found', 'campaign-office-core'),
-        'not_found_in_trash'    => __('Not found in Trash', 'campaign-office-core'),
-        'featured_image'        => __('Event Image', 'campaign-office-core'),
-        'set_featured_image'    => __('Set event image', 'campaign-office-core'),
-        'remove_featured_image' => __('Remove event image', 'campaign-office-core'),
-        'use_featured_image'    => __('Use as event image', 'campaign-office-core'),
-        'insert_into_item'      => __('Insert into event', 'campaign-office-core'),
-        'uploaded_to_this_item' => __('Uploaded to this event', 'campaign-office-core'),
-        'items_list'            => __('Events list', 'campaign-office-core'),
-        'items_list_navigation' => __('Events list navigation', 'campaign-office-core'),
-        'filter_items_list'     => __('Filter events list', 'campaign-office-core'),
+        'name'                  => _x('Events', 'Post Type General Name', 'campaignpress-core'),
+        'singular_name'         => _x('Event', 'Post Type Singular Name', 'campaignpress-core'),
+        'menu_name'             => __('Events', 'campaignpress-core'),
+        'name_admin_bar'        => __('Event', 'campaignpress-core'),
+        'archives'              => __('Event Archives', 'campaignpress-core'),
+        'attributes'            => __('Event Attributes', 'campaignpress-core'),
+        'parent_item_colon'     => __('Parent Event:', 'campaignpress-core'),
+        'all_items'             => __('All Events', 'campaignpress-core'),
+        'add_new_item'          => __('Add New Event', 'campaignpress-core'),
+        'add_new'               => __('Add New', 'campaignpress-core'),
+        'new_item'              => __('New Event', 'campaignpress-core'),
+        'edit_item'             => __('Edit Event', 'campaignpress-core'),
+        'update_item'           => __('Update Event', 'campaignpress-core'),
+        'view_item'             => __('View Event', 'campaignpress-core'),
+        'view_items'            => __('View Events', 'campaignpress-core'),
+        'search_items'          => __('Search Event', 'campaignpress-core'),
+        'not_found'             => __('Not found', 'campaignpress-core'),
+        'not_found_in_trash'    => __('Not found in Trash', 'campaignpress-core'),
+        'featured_image'        => __('Event Image', 'campaignpress-core'),
+        'set_featured_image'    => __('Set event image', 'campaignpress-core'),
+        'remove_featured_image' => __('Remove event image', 'campaignpress-core'),
+        'use_featured_image'    => __('Use as event image', 'campaignpress-core'),
+        'insert_into_item'      => __('Insert into event', 'campaignpress-core'),
+        'uploaded_to_this_item' => __('Uploaded to this event', 'campaignpress-core'),
+        'items_list'            => __('Events list', 'campaignpress-core'),
+        'items_list_navigation' => __('Events list navigation', 'campaignpress-core'),
+        'filter_items_list'     => __('Filter events list', 'campaignpress-core'),
     );
 
     $args = array(
-        'label'                 => __('Event', 'campaign-office-core'),
-        'description'           => __('Campaign events and appearances', 'campaign-office-core'),
+        'label'                 => __('Event', 'campaignpress-core'),
+        'description'           => __('Campaign events and appearances', 'campaignpress-core'),
         'labels'                => $labels,
         'supports'              => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
         'taxonomies'            => array('event_type'),
@@ -168,15 +168,15 @@ function cp_register_events_post_type() {
 
     // Register Event Type taxonomy
     $tax_labels = array(
-        'name'              => _x('Event Types', 'taxonomy general name', 'campaign-office-core'),
-        'singular_name'     => _x('Event Type', 'taxonomy singular name', 'campaign-office-core'),
-        'search_items'      => __('Search Event Types', 'campaign-office-core'),
-        'all_items'         => __('All Event Types', 'campaign-office-core'),
-        'edit_item'         => __('Edit Event Type', 'campaign-office-core'),
-        'update_item'       => __('Update Event Type', 'campaign-office-core'),
-        'add_new_item'      => __('Add New Event Type', 'campaign-office-core'),
-        'new_item_name'     => __('New Event Type Name', 'campaign-office-core'),
-        'menu_name'         => __('Event Types', 'campaign-office-core'),
+        'name'              => _x('Event Types', 'taxonomy general name', 'campaignpress-core'),
+        'singular_name'     => _x('Event Type', 'taxonomy singular name', 'campaignpress-core'),
+        'search_items'      => __('Search Event Types', 'campaignpress-core'),
+        'all_items'         => __('All Event Types', 'campaignpress-core'),
+        'edit_item'         => __('Edit Event Type', 'campaignpress-core'),
+        'update_item'       => __('Update Event Type', 'campaignpress-core'),
+        'add_new_item'      => __('Add New Event Type', 'campaignpress-core'),
+        'new_item_name'     => __('New Event Type Name', 'campaignpress-core'),
+        'menu_name'         => __('Event Types', 'campaignpress-core'),
     );
 
     $tax_args = array(
@@ -198,38 +198,38 @@ add_action('init', 'cp_register_events_post_type', 0);
  */
 function cp_register_endorsements_post_type() {
     $labels = array(
-        'name'                  => _x('Endorsements', 'Post Type General Name', 'campaign-office-core'),
-        'singular_name'         => _x('Endorsement', 'Post Type Singular Name', 'campaign-office-core'),
-        'menu_name'             => __('Endorsements', 'campaign-office-core'),
-        'name_admin_bar'        => __('Endorsement', 'campaign-office-core'),
-        'archives'              => __('Endorsement Archives', 'campaign-office-core'),
-        'attributes'            => __('Endorsement Attributes', 'campaign-office-core'),
-        'parent_item_colon'     => __('Parent Endorsement:', 'campaign-office-core'),
-        'all_items'             => __('All Endorsements', 'campaign-office-core'),
-        'add_new_item'          => __('Add New Endorsement', 'campaign-office-core'),
-        'add_new'               => __('Add New', 'campaign-office-core'),
-        'new_item'              => __('New Endorsement', 'campaign-office-core'),
-        'edit_item'             => __('Edit Endorsement', 'campaign-office-core'),
-        'update_item'           => __('Update Endorsement', 'campaign-office-core'),
-        'view_item'             => __('View Endorsement', 'campaign-office-core'),
-        'view_items'            => __('View Endorsements', 'campaign-office-core'),
-        'search_items'          => __('Search Endorsement', 'campaign-office-core'),
-        'not_found'             => __('Not found', 'campaign-office-core'),
-        'not_found_in_trash'    => __('Not found in Trash', 'campaign-office-core'),
-        'featured_image'        => __('Endorser Photo', 'campaign-office-core'),
-        'set_featured_image'    => __('Set endorser photo', 'campaign-office-core'),
-        'remove_featured_image' => __('Remove endorser photo', 'campaign-office-core'),
-        'use_featured_image'    => __('Use as endorser photo', 'campaign-office-core'),
-        'insert_into_item'      => __('Insert into endorsement', 'campaign-office-core'),
-        'uploaded_to_this_item' => __('Uploaded to this endorsement', 'campaign-office-core'),
-        'items_list'            => __('Endorsements list', 'campaign-office-core'),
-        'items_list_navigation' => __('Endorsements list navigation', 'campaign-office-core'),
-        'filter_items_list'     => __('Filter endorsements list', 'campaign-office-core'),
+        'name'                  => _x('Endorsements', 'Post Type General Name', 'campaignpress-core'),
+        'singular_name'         => _x('Endorsement', 'Post Type Singular Name', 'campaignpress-core'),
+        'menu_name'             => __('Endorsements', 'campaignpress-core'),
+        'name_admin_bar'        => __('Endorsement', 'campaignpress-core'),
+        'archives'              => __('Endorsement Archives', 'campaignpress-core'),
+        'attributes'            => __('Endorsement Attributes', 'campaignpress-core'),
+        'parent_item_colon'     => __('Parent Endorsement:', 'campaignpress-core'),
+        'all_items'             => __('All Endorsements', 'campaignpress-core'),
+        'add_new_item'          => __('Add New Endorsement', 'campaignpress-core'),
+        'add_new'               => __('Add New', 'campaignpress-core'),
+        'new_item'              => __('New Endorsement', 'campaignpress-core'),
+        'edit_item'             => __('Edit Endorsement', 'campaignpress-core'),
+        'update_item'           => __('Update Endorsement', 'campaignpress-core'),
+        'view_item'             => __('View Endorsement', 'campaignpress-core'),
+        'view_items'            => __('View Endorsements', 'campaignpress-core'),
+        'search_items'          => __('Search Endorsement', 'campaignpress-core'),
+        'not_found'             => __('Not found', 'campaignpress-core'),
+        'not_found_in_trash'    => __('Not found in Trash', 'campaignpress-core'),
+        'featured_image'        => __('Endorser Photo', 'campaignpress-core'),
+        'set_featured_image'    => __('Set endorser photo', 'campaignpress-core'),
+        'remove_featured_image' => __('Remove endorser photo', 'campaignpress-core'),
+        'use_featured_image'    => __('Use as endorser photo', 'campaignpress-core'),
+        'insert_into_item'      => __('Insert into endorsement', 'campaignpress-core'),
+        'uploaded_to_this_item' => __('Uploaded to this endorsement', 'campaignpress-core'),
+        'items_list'            => __('Endorsements list', 'campaignpress-core'),
+        'items_list_navigation' => __('Endorsements list navigation', 'campaignpress-core'),
+        'filter_items_list'     => __('Filter endorsements list', 'campaignpress-core'),
     );
 
     $args = array(
-        'label'                 => __('Endorsement', 'campaign-office-core'),
-        'description'           => __('Campaign endorsements', 'campaign-office-core'),
+        'label'                 => __('Endorsement', 'campaignpress-core'),
+        'description'           => __('Campaign endorsements', 'campaignpress-core'),
         'labels'                => $labels,
         'supports'              => array('title', 'editor', 'thumbnail', 'custom-fields'),
         'hierarchical'          => false,
@@ -258,38 +258,38 @@ add_action('init', 'cp_register_endorsements_post_type', 0);
  */
 function cp_register_team_post_type() {
     $labels = array(
-        'name'                  => _x('Team Members', 'Post Type General Name', 'campaign-office-core'),
-        'singular_name'         => _x('Team Member', 'Post Type Singular Name', 'campaign-office-core'),
-        'menu_name'             => __('Team', 'campaign-office-core'),
-        'name_admin_bar'        => __('Team Member', 'campaign-office-core'),
-        'archives'              => __('Team Member Archives', 'campaign-office-core'),
-        'attributes'            => __('Team Member Attributes', 'campaign-office-core'),
-        'parent_item_colon'     => __('Parent Team Member:', 'campaign-office-core'),
-        'all_items'             => __('All Team Members', 'campaign-office-core'),
-        'add_new_item'          => __('Add New Team Member', 'campaign-office-core'),
-        'add_new'               => __('Add New', 'campaign-office-core'),
-        'new_item'              => __('New Team Member', 'campaign-office-core'),
-        'edit_item'             => __('Edit Team Member', 'campaign-office-core'),
-        'update_item'           => __('Update Team Member', 'campaign-office-core'),
-        'view_item'             => __('View Team Member', 'campaign-office-core'),
-        'view_items'            => __('View Team Members', 'campaign-office-core'),
-        'search_items'          => __('Search Team Member', 'campaign-office-core'),
-        'not_found'             => __('Not found', 'campaign-office-core'),
-        'not_found_in_trash'    => __('Not found in Trash', 'campaign-office-core'),
-        'featured_image'        => __('Team Member Photo', 'campaign-office-core'),
-        'set_featured_image'    => __('Set photo', 'campaign-office-core'),
-        'remove_featured_image' => __('Remove photo', 'campaign-office-core'),
-        'use_featured_image'    => __('Use as photo', 'campaign-office-core'),
-        'insert_into_item'      => __('Insert into team member', 'campaign-office-core'),
-        'uploaded_to_this_item' => __('Uploaded to this team member', 'campaign-office-core'),
-        'items_list'            => __('Team members list', 'campaign-office-core'),
-        'items_list_navigation' => __('Team members list navigation', 'campaign-office-core'),
-        'filter_items_list'     => __('Filter team members list', 'campaign-office-core'),
+        'name'                  => _x('Team Members', 'Post Type General Name', 'campaignpress-core'),
+        'singular_name'         => _x('Team Member', 'Post Type Singular Name', 'campaignpress-core'),
+        'menu_name'             => __('Team', 'campaignpress-core'),
+        'name_admin_bar'        => __('Team Member', 'campaignpress-core'),
+        'archives'              => __('Team Member Archives', 'campaignpress-core'),
+        'attributes'            => __('Team Member Attributes', 'campaignpress-core'),
+        'parent_item_colon'     => __('Parent Team Member:', 'campaignpress-core'),
+        'all_items'             => __('All Team Members', 'campaignpress-core'),
+        'add_new_item'          => __('Add New Team Member', 'campaignpress-core'),
+        'add_new'               => __('Add New', 'campaignpress-core'),
+        'new_item'              => __('New Team Member', 'campaignpress-core'),
+        'edit_item'             => __('Edit Team Member', 'campaignpress-core'),
+        'update_item'           => __('Update Team Member', 'campaignpress-core'),
+        'view_item'             => __('View Team Member', 'campaignpress-core'),
+        'view_items'            => __('View Team Members', 'campaignpress-core'),
+        'search_items'          => __('Search Team Member', 'campaignpress-core'),
+        'not_found'             => __('Not found', 'campaignpress-core'),
+        'not_found_in_trash'    => __('Not found in Trash', 'campaignpress-core'),
+        'featured_image'        => __('Team Member Photo', 'campaignpress-core'),
+        'set_featured_image'    => __('Set photo', 'campaignpress-core'),
+        'remove_featured_image' => __('Remove photo', 'campaignpress-core'),
+        'use_featured_image'    => __('Use as photo', 'campaignpress-core'),
+        'insert_into_item'      => __('Insert into team member', 'campaignpress-core'),
+        'uploaded_to_this_item' => __('Uploaded to this team member', 'campaignpress-core'),
+        'items_list'            => __('Team members list', 'campaignpress-core'),
+        'items_list_navigation' => __('Team members list navigation', 'campaignpress-core'),
+        'filter_items_list'     => __('Filter team members list', 'campaignpress-core'),
     );
 
     $args = array(
-        'label'                 => __('Team Member', 'campaign-office-core'),
-        'description'           => __('Campaign team members and staff', 'campaign-office-core'),
+        'label'                 => __('Team Member', 'campaignpress-core'),
+        'description'           => __('Campaign team members and staff', 'campaignpress-core'),
         'labels'                => $labels,
         'supports'              => array('title', 'editor', 'thumbnail', 'custom-fields'),
         'hierarchical'          => false,
@@ -318,38 +318,38 @@ add_action('init', 'cp_register_team_post_type', 0);
  */
 function cp_register_volunteer_post_type() {
     $labels = array(
-        'name'                  => _x('Volunteer Opportunities', 'Post Type General Name', 'campaign-office-core'),
-        'singular_name'         => _x('Volunteer Opportunity', 'Post Type Singular Name', 'campaign-office-core'),
-        'menu_name'             => __('Volunteer Opportunities', 'campaign-office-core'),
-        'name_admin_bar'        => __('Volunteer Opportunity', 'campaign-office-core'),
-        'archives'              => __('Volunteer Opportunity Archives', 'campaign-office-core'),
-        'attributes'            => __('Volunteer Opportunity Attributes', 'campaign-office-core'),
-        'parent_item_colon'     => __('Parent Opportunity:', 'campaign-office-core'),
-        'all_items'             => __('All Opportunities', 'campaign-office-core'),
-        'add_new_item'          => __('Add New Opportunity', 'campaign-office-core'),
-        'add_new'               => __('Add New', 'campaign-office-core'),
-        'new_item'              => __('New Opportunity', 'campaign-office-core'),
-        'edit_item'             => __('Edit Opportunity', 'campaign-office-core'),
-        'update_item'           => __('Update Opportunity', 'campaign-office-core'),
-        'view_item'             => __('View Opportunity', 'campaign-office-core'),
-        'view_items'            => __('View Opportunities', 'campaign-office-core'),
-        'search_items'          => __('Search Opportunity', 'campaign-office-core'),
-        'not_found'             => __('Not found', 'campaign-office-core'),
-        'not_found_in_trash'    => __('Not found in Trash', 'campaign-office-core'),
-        'featured_image'        => __('Opportunity Image', 'campaign-office-core'),
-        'set_featured_image'    => __('Set opportunity image', 'campaign-office-core'),
-        'remove_featured_image' => __('Remove opportunity image', 'campaign-office-core'),
-        'use_featured_image'    => __('Use as opportunity image', 'campaign-office-core'),
-        'insert_into_item'      => __('Insert into opportunity', 'campaign-office-core'),
-        'uploaded_to_this_item' => __('Uploaded to this opportunity', 'campaign-office-core'),
-        'items_list'            => __('Opportunities list', 'campaign-office-core'),
-        'items_list_navigation' => __('Opportunities list navigation', 'campaign-office-core'),
-        'filter_items_list'     => __('Filter opportunities list', 'campaign-office-core'),
+        'name'                  => _x('Volunteer Opportunities', 'Post Type General Name', 'campaignpress-core'),
+        'singular_name'         => _x('Volunteer Opportunity', 'Post Type Singular Name', 'campaignpress-core'),
+        'menu_name'             => __('Volunteer Opportunities', 'campaignpress-core'),
+        'name_admin_bar'        => __('Volunteer Opportunity', 'campaignpress-core'),
+        'archives'              => __('Volunteer Opportunity Archives', 'campaignpress-core'),
+        'attributes'            => __('Volunteer Opportunity Attributes', 'campaignpress-core'),
+        'parent_item_colon'     => __('Parent Opportunity:', 'campaignpress-core'),
+        'all_items'             => __('All Opportunities', 'campaignpress-core'),
+        'add_new_item'          => __('Add New Opportunity', 'campaignpress-core'),
+        'add_new'               => __('Add New', 'campaignpress-core'),
+        'new_item'              => __('New Opportunity', 'campaignpress-core'),
+        'edit_item'             => __('Edit Opportunity', 'campaignpress-core'),
+        'update_item'           => __('Update Opportunity', 'campaignpress-core'),
+        'view_item'             => __('View Opportunity', 'campaignpress-core'),
+        'view_items'            => __('View Opportunities', 'campaignpress-core'),
+        'search_items'          => __('Search Opportunity', 'campaignpress-core'),
+        'not_found'             => __('Not found', 'campaignpress-core'),
+        'not_found_in_trash'    => __('Not found in Trash', 'campaignpress-core'),
+        'featured_image'        => __('Opportunity Image', 'campaignpress-core'),
+        'set_featured_image'    => __('Set opportunity image', 'campaignpress-core'),
+        'remove_featured_image' => __('Remove opportunity image', 'campaignpress-core'),
+        'use_featured_image'    => __('Use as opportunity image', 'campaignpress-core'),
+        'insert_into_item'      => __('Insert into opportunity', 'campaignpress-core'),
+        'uploaded_to_this_item' => __('Uploaded to this opportunity', 'campaignpress-core'),
+        'items_list'            => __('Opportunities list', 'campaignpress-core'),
+        'items_list_navigation' => __('Opportunities list navigation', 'campaignpress-core'),
+        'filter_items_list'     => __('Filter opportunities list', 'campaignpress-core'),
     );
 
     $args = array(
-        'label'                 => __('Volunteer Opportunity', 'campaign-office-core'),
-        'description'           => __('Volunteer opportunities and positions', 'campaign-office-core'),
+        'label'                 => __('Volunteer Opportunity', 'campaignpress-core'),
+        'description'           => __('Volunteer opportunities and positions', 'campaignpress-core'),
         'labels'                => $labels,
         'supports'              => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
         'hierarchical'          => false,
@@ -378,38 +378,38 @@ add_action('init', 'cp_register_volunteer_post_type', 0);
  */
 function cp_register_press_release_post_type() {
     $labels = array(
-        'name'                  => _x('Press Releases', 'Post Type General Name', 'campaign-office-core'),
-        'singular_name'         => _x('Press Release', 'Post Type Singular Name', 'campaign-office-core'),
-        'menu_name'             => __('Press Releases', 'campaign-office-core'),
-        'name_admin_bar'        => __('Press Release', 'campaign-office-core'),
-        'archives'              => __('Press Release Archives', 'campaign-office-core'),
-        'attributes'            => __('Press Release Attributes', 'campaign-office-core'),
-        'parent_item_colon'     => __('Parent Press Release:', 'campaign-office-core'),
-        'all_items'             => __('All Press Releases', 'campaign-office-core'),
-        'add_new_item'          => __('Add New Press Release', 'campaign-office-core'),
-        'add_new'               => __('Add New', 'campaign-office-core'),
-        'new_item'              => __('New Press Release', 'campaign-office-core'),
-        'edit_item'             => __('Edit Press Release', 'campaign-office-core'),
-        'update_item'           => __('Update Press Release', 'campaign-office-core'),
-        'view_item'             => __('View Press Release', 'campaign-office-core'),
-        'view_items'            => __('View Press Releases', 'campaign-office-core'),
-        'search_items'          => __('Search Press Release', 'campaign-office-core'),
-        'not_found'             => __('Not found', 'campaign-office-core'),
-        'not_found_in_trash'    => __('Not found in Trash', 'campaign-office-core'),
-        'featured_image'        => __('Featured Image', 'campaign-office-core'),
-        'set_featured_image'    => __('Set featured image', 'campaign-office-core'),
-        'remove_featured_image' => __('Remove featured image', 'campaign-office-core'),
-        'use_featured_image'    => __('Use as featured image', 'campaign-office-core'),
-        'insert_into_item'      => __('Insert into press release', 'campaign-office-core'),
-        'uploaded_to_this_item' => __('Uploaded to this press release', 'campaign-office-core'),
-        'items_list'            => __('Press releases list', 'campaign-office-core'),
-        'items_list_navigation' => __('Press releases list navigation', 'campaign-office-core'),
-        'filter_items_list'     => __('Filter press releases list', 'campaign-office-core'),
+        'name'                  => _x('Press Releases', 'Post Type General Name', 'campaignpress-core'),
+        'singular_name'         => _x('Press Release', 'Post Type Singular Name', 'campaignpress-core'),
+        'menu_name'             => __('Press Releases', 'campaignpress-core'),
+        'name_admin_bar'        => __('Press Release', 'campaignpress-core'),
+        'archives'              => __('Press Release Archives', 'campaignpress-core'),
+        'attributes'            => __('Press Release Attributes', 'campaignpress-core'),
+        'parent_item_colon'     => __('Parent Press Release:', 'campaignpress-core'),
+        'all_items'             => __('All Press Releases', 'campaignpress-core'),
+        'add_new_item'          => __('Add New Press Release', 'campaignpress-core'),
+        'add_new'               => __('Add New', 'campaignpress-core'),
+        'new_item'              => __('New Press Release', 'campaignpress-core'),
+        'edit_item'             => __('Edit Press Release', 'campaignpress-core'),
+        'update_item'           => __('Update Press Release', 'campaignpress-core'),
+        'view_item'             => __('View Press Release', 'campaignpress-core'),
+        'view_items'            => __('View Press Releases', 'campaignpress-core'),
+        'search_items'          => __('Search Press Release', 'campaignpress-core'),
+        'not_found'             => __('Not found', 'campaignpress-core'),
+        'not_found_in_trash'    => __('Not found in Trash', 'campaignpress-core'),
+        'featured_image'        => __('Featured Image', 'campaignpress-core'),
+        'set_featured_image'    => __('Set featured image', 'campaignpress-core'),
+        'remove_featured_image' => __('Remove featured image', 'campaignpress-core'),
+        'use_featured_image'    => __('Use as featured image', 'campaignpress-core'),
+        'insert_into_item'      => __('Insert into press release', 'campaignpress-core'),
+        'uploaded_to_this_item' => __('Uploaded to this press release', 'campaignpress-core'),
+        'items_list'            => __('Press releases list', 'campaignpress-core'),
+        'items_list_navigation' => __('Press releases list navigation', 'campaignpress-core'),
+        'filter_items_list'     => __('Filter press releases list', 'campaignpress-core'),
     );
 
     $args = array(
-        'label'                 => __('Press Release', 'campaign-office-core'),
-        'description'           => __('Campaign press releases and statements', 'campaign-office-core'),
+        'label'                 => __('Press Release', 'campaignpress-core'),
+        'description'           => __('Campaign press releases and statements', 'campaignpress-core'),
         'labels'                => $labels,
         'supports'              => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'author'),
         'hierarchical'          => false,
@@ -439,7 +439,7 @@ add_action('init', 'cp_register_press_release_post_type', 0);
 function cp_add_event_meta_boxes() {
     add_meta_box(
         'cp_event_details',
-        __('Event Details', 'campaign-office-core'),
+        __('Event Details', 'campaignpress-core'),
         'cp_event_details_callback',
         'cp_event',
         'normal',
@@ -465,35 +465,35 @@ function cp_event_details_callback($post) {
 
     ?>
     <p>
-        <label for="cp_event_date"><strong><?php esc_html_e('Event Date:', 'campaign-office-core'); ?></strong></label><br>
+        <label for="cp_event_date"><strong><?php esc_html_e('Event Date:', 'campaignpress-core'); ?></strong></label><br>
         <input type="date" id="cp_event_date" name="cp_event_date" value="<?php echo esc_attr($event_date); ?>" style="width: 100%; max-width: 300px;">
     </p>
     <p>
-        <label for="cp_event_time"><strong><?php esc_html_e('Event Time:', 'campaign-office-core'); ?></strong></label><br>
+        <label for="cp_event_time"><strong><?php esc_html_e('Event Time:', 'campaignpress-core'); ?></strong></label><br>
         <input type="time" id="cp_event_time" name="cp_event_time" value="<?php echo esc_attr($event_time); ?>" style="width: 100%; max-width: 300px;">
     </p>
     <p>
-        <label for="cp_event_location"><strong><?php esc_html_e('Location Name:', 'campaign-office-core'); ?></strong></label><br>
+        <label for="cp_event_location"><strong><?php esc_html_e('Location Name:', 'campaignpress-core'); ?></strong></label><br>
         <input type="text" id="cp_event_location" name="cp_event_location" value="<?php echo esc_attr($event_location); ?>" style="width: 100%;">
     </p>
     <p>
-        <label for="cp_event_address"><strong><?php esc_html_e('Street Address:', 'campaign-office-core'); ?></strong></label><br>
+        <label for="cp_event_address"><strong><?php esc_html_e('Street Address:', 'campaignpress-core'); ?></strong></label><br>
         <input type="text" id="cp_event_address" name="cp_event_address" value="<?php echo esc_attr($event_address); ?>" style="width: 100%;">
     </p>
     <p>
-        <label for="cp_event_city"><strong><?php esc_html_e('City:', 'campaign-office-core'); ?></strong></label><br>
+        <label for="cp_event_city"><strong><?php esc_html_e('City:', 'campaignpress-core'); ?></strong></label><br>
         <input type="text" id="cp_event_city" name="cp_event_city" value="<?php echo esc_attr($event_city); ?>" style="width: 100%;">
     </p>
     <p>
-        <label for="cp_event_state"><strong><?php esc_html_e('State:', 'campaign-office-core'); ?></strong></label><br>
+        <label for="cp_event_state"><strong><?php esc_html_e('State:', 'campaignpress-core'); ?></strong></label><br>
         <input type="text" id="cp_event_state" name="cp_event_state" value="<?php echo esc_attr($event_state); ?>" maxlength="2" style="width: 100px;">
     </p>
     <p>
-        <label for="cp_event_zip"><strong><?php esc_html_e('ZIP Code:', 'campaign-office-core'); ?></strong></label><br>
+        <label for="cp_event_zip"><strong><?php esc_html_e('ZIP Code:', 'campaignpress-core'); ?></strong></label><br>
         <input type="text" id="cp_event_zip" name="cp_event_zip" value="<?php echo esc_attr($event_zip); ?>" style="width: 150px;">
     </p>
     <p>
-        <label for="cp_event_rsvp_link"><strong><?php esc_html_e('RSVP Link:', 'campaign-office-core'); ?></strong></label><br>
+        <label for="cp_event_rsvp_link"><strong><?php esc_html_e('RSVP Link:', 'campaignpress-core'); ?></strong></label><br>
         <input type="url" id="cp_event_rsvp_link" name="cp_event_rsvp_link" value="<?php echo esc_url($event_rsvp_link); ?>" style="width: 100%;" placeholder="https://">
     </p>
     <?php

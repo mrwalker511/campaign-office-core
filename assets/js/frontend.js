@@ -1,5 +1,5 @@
 /**
- * Campaign Office Core Frontend JS
+ * CampaignPress Core Frontend JS
  */
 
 jQuery(document).ready(function ($) {

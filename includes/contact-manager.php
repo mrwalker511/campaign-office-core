@@ -5,7 +5,7 @@
  * Centralized contact management for all campaign interactions.
  * Handles volunteer signups, event RSVPs, donor information, etc.
  *
- * @package Campaign_Office_Core
+ * @package CampaignPress_Core
  * @since 1.0.0
  */
 
@@ -126,12 +126,12 @@ class CP_Contact_Manager {
 
         // Validate required fields
         if (empty($data['email'])) {
-            return new WP_Error('missing_email', __('Email address is required.', 'campaign-office-core'));
+            return new WP_Error('missing_email', __('Email address is required.', 'campaignpress-core'));
         }
 
         $email = sanitize_email($data['email']);
         if (!is_email($email)) {
-            return new WP_Error('invalid_email', __('Please provide a valid email address.', 'campaign-office-core'));
+            return new WP_Error('invalid_email', __('Please provide a valid email address.', 'campaignpress-core'));
         }
 
         // Check for existing contact
@@ -184,7 +184,7 @@ class CP_Contact_Manager {
             if ($result) {
                 return (int) $wpdb->insert_id;
             } else {
-                return new WP_Error('db_error', __('Failed to save contact information.', 'campaign-office-core'));
+                return new WP_Error('db_error', __('Failed to save contact information.', 'campaignpress-core'));
             }
         }
     }

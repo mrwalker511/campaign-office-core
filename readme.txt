@@ -1,4 +1,4 @@
-=== Campaign Office Core ===
+=== CampaignPress Core ===
 Contributors: mrwalker511
 Tags: campaign, political, volunteer, events, crm
 Requires at least: 5.8
@@ -12,7 +12,7 @@ Core functionality for political campaigns including custom post types, voluntee
 
 == Description ==
 
-Campaign Office Core provides essential campaign management functionality for WordPress. Built for political campaigns, advocacy groups, and grassroots organizations.
+CampaignPress Core provides essential campaign management functionality for WordPress. Built for political campaigns, advocacy groups, and grassroots organizations.
 
 = Key Features =
 
@@ -53,20 +53,20 @@ Campaign Office Core provides essential campaign management functionality for Wo
 * Issue-based campaigns
 
 = Works With Any Theme =
-This plugin provides core functionality that works with any WordPress theme. Optimized for the Campaign Office theme but fully functional standalone.
+This plugin provides core functionality that works with any WordPress theme. Optimized for the CampaignPress theme but fully functional standalone.
 
 == Installation ==
 
-1. Upload the plugin files to `/wp-content/plugins/campaign-office-core/`
+1. Upload the plugin files to `/wp-content/plugins/campaignpress-core/`
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. New menu items will appear: Issues, Events, Endorsements, Team, Volunteer Opportunities, Press Releases
 4. Start adding campaign content!
 
 == Frequently Asked Questions ==
 
-= Does this require the Campaign Office theme? =
+= Does this require the CampaignPress theme? =
 
-No! This plugin works with any WordPress theme. It's optimized for Campaign Office but fully functional as a standalone plugin.
+No! This plugin works with any WordPress theme. It's optimized for CampaignPress but fully functional as a standalone plugin.
 
 = What happens to my data if I switch themes? =
 
@@ -95,9 +95,9 @@ The plugin provides tools for data export and deletion. Site owners are responsi
 == Changelog ==
 
 = 2.0.0 - 2026-01-10 =
-**Major Update - Version Alignment with Campaign Office Theme 2.0**
+**Major Update - Version Alignment with CampaignPress Theme 2.0**
 
-* **Updated:** Version bumped to 2.0.0 to align with Campaign Office theme
+* **Updated:** Version bumped to 2.0.0 to align with CampaignPress theme
 * **Documented:** Press Release CPT now officially documented
 * **Improved:** Contact manager database optimization
 * **Improved:** Event calendar enhancements with iCal and Google Maps
@@ -125,7 +125,7 @@ The plugin provides tools for data export and deletion. Site owners are responsi
 == Upgrade Notice ==
 
 = 2.0.0 =
-Version alignment update with Campaign Office theme 2.0. Fully backward compatible. Recommended for all users.
+Version alignment update with CampaignPress theme 2.0. Fully backward compatible. Recommended for all users.
 
 = 1.0.0 =
-Initial release of Campaign Office Core functionality plugin.
+Initial release of CampaignPress Core functionality plugin.
