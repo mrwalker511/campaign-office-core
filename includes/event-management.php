@@ -422,37 +422,85 @@ class CP_Event_Manager {
     }
 
     /**
-     * Handle event RSVP submission
+     * Handle event RSVP submission with enhanced security
      */
     public function handle_event_rsvp() {
+        // Rate limiting - maximum 3 RSVPs per hour per IP per event
+        $ip = $this->get_client_ip();
+        $event_id = absint($_POST['event_id'] ?? 0);
+        $rate_limit_key = 'cp_event_rsvp_rate_limit_' . md5($ip . '_' . $event_id);
+        $submissions = get_transient($rate_limit_key);
+        
+        if ($submissions && $submissions >= 3) {
+            wp_send_json_error(array('message' => __('Too many RSVP submissions. Please try again later.', 'campaignpress-core')));
+        }
+
         // Verify nonce
         if (!isset($_POST['cp_event_rsvp_nonce']) || !wp_verify_nonce($_POST['cp_event_rsvp_nonce'], 'cp_event_rsvp')) {
             wp_send_json_error(array('message' => __('Security verification failed.', 'campaignpress-core')));
         }
 
+        // Enhanced event validation
         $event_id = absint($_POST['event_id'] ?? 0);
-
-        // Validate event
-        if (!$event_id || get_post_type($event_id) !== 'cp_event') {
+        if (!$event_id) {
             wp_send_json_error(array('message' => __('Invalid event.', 'campaignpress-core')));
         }
 
-        // Check capacity
+        // Check if event exists and is published
+        $event = get_post($event_id);
+        if (!$event || $event->post_type !== 'cp_event' || $event->post_status !== 'publish') {
+            wp_send_json_error(array('message' => __('Event not found or not available.', 'campaignpress-core')));
+        }
+
+        // Check RSVP deadline if set
+        $rsvp_deadline = get_post_meta($event_id, '_cp_rsvp_deadline', true);
+        if ($rsvp_deadline && strtotime($rsvp_deadline) < current_time('timestamp')) {
+            wp_send_json_error(array('message' => __('RSVP deadline has passed.', 'campaignpress-core')));
+        }
+
+        // Enhanced capacity check
         $max_capacity = get_post_meta($event_id, '_cp_max_capacity', true);
         $current_rsvps = $this->get_event_rsvp_count($event_id);
         $guests = absint($_POST['guests'] ?? 1);
+        
+        // Validate guest count
+        if ($guests < 1 || $guests > 10) {
+            wp_send_json_error(array('message' => __('Invalid number of guests.', 'campaignpress-core')));
+        }
 
         if ($max_capacity && ($current_rsvps + $guests) > $max_capacity) {
             wp_send_json_error(array('message' => __('Sorry, this event is at full capacity.', 'campaignpress-core')));
         }
 
+        // Enhanced input validation and sanitization
         $first_name = sanitize_text_field($_POST['first_name'] ?? '');
         $last_name = sanitize_text_field($_POST['last_name'] ?? '');
         $email = sanitize_email($_POST['email'] ?? '');
+        $phone = sanitize_text_field($_POST['phone'] ?? '');
 
         // Validate required fields
         if (empty($first_name) || empty($last_name) || empty($email)) {
             wp_send_json_error(array('message' => __('Please fill in all required fields.', 'campaignpress-core')));
+        }
+        
+        // Enhanced validation
+        if (strlen($first_name) > 100 || strlen($last_name) > 100) {
+            wp_send_json_error(array('message' => __('Name fields are too long.', 'campaignpress-core')));
+        }
+        
+        if (!is_email($email)) {
+            wp_send_json_error(array('message' => __('Please provide a valid email address.', 'campaignpress-core')));
+        }
+        
+        if (!empty($phone) && strlen($phone) > 20) {
+            wp_send_json_error(array('message' => __('Phone number is too long.', 'campaignpress-core')));
+        }
+
+        // Update rate limit
+        if ($submissions) {
+            set_transient($rate_limit_key, $submissions + 1, HOUR_IN_SECONDS);
+        } else {
+            set_transient($rate_limit_key, 1, HOUR_IN_SECONDS);
         }
 
         // Identify or Create Contact
@@ -464,7 +512,7 @@ class CP_Event_Manager {
                 'first_name' => $first_name,
                 'last_name'  => $last_name,
                 'email'      => $email,
-                'phone'      => sanitize_text_field($_POST['phone'] ?? ''),
+                'phone'      => $phone,
             ));
 
             if (is_wp_error($contact_id)) {
@@ -472,19 +520,42 @@ class CP_Event_Manager {
             }
         }
 
-        // Sanitize input data
+        // Sanitize input data with enhanced validation
+        $dietary_restrictions = '';
+        if (isset($_POST['dietary_restrictions'])) {
+            $dietary = sanitize_textarea_field($_POST['dietary_restrictions']);
+            if (strlen($dietary) > 500) {
+                wp_send_json_error(array('message' => __('Dietary restrictions field is too long.', 'campaignpress-core')));
+            }
+            $dietary_restrictions = $dietary;
+        }
+
         $rsvp_data = array(
             'event_id'             => $event_id,
             'contact_id'           => $contact_id,
             'guests'               => $guests,
-            'dietary_restrictions' => sanitize_textarea_field($_POST['dietary_restrictions'] ?? ''),
+            'dietary_restrictions' => $dietary_restrictions,
             'rsvp_status'          => 'attending',
         );
 
-        // Insert into database
+        // Enhanced database insert with error handling
         global $wpdb;
         $result = $wpdb->insert($this->rsvp_table_name, $rsvp_data, array(
             '%d', '%d', '%d', '%s', '%s'
+        ));
+
+        if ($result === false) {
+            // Log database error for debugging
+            error_log('Campaign Office Core: Database error in event RSVP - ' . $wpdb->last_error);
+            wp_send_json_error(array('message' => __('Failed to save RSVP. Please try again.', 'campaignpress-core')));
+        }
+
+        // Log successful RSVP for security audit
+        $this->log_security_event('event_rsvp_success', array(
+            'event_id' => $event_id,
+            'contact_id' => $contact_id,
+            'guests' => $guests,
+            'ip' => $this->get_client_ip()
         ));
 
         if ($result) {
@@ -497,6 +568,112 @@ class CP_Event_Manager {
         } else {
             wp_send_json_error(array('message' => __('Failed to save RSVP. Please try again.', 'campaignpress-core')));
         }
+    }
+
+    /**
+     * Get client IP address for rate limiting
+     *
+     * @return string Client IP address
+     */
+    private function get_client_ip() {
+        $ip_keys = array('HTTP_X_FORWARDED_FOR', 'HTTP_X_REAL_IP', 'HTTP_CLIENT_IP', 'REMOTE_ADDR');
+        
+        foreach ($ip_keys as $key) {
+            if (!empty($_SERVER[$key])) {
+                $ip = $_SERVER[$key];
+                // Handle comma-separated IPs (proxies)
+                if (strpos($ip, ',') !== false) {
+                    $ip = trim(explode(',', $ip)[0]);
+                }
+                // Validate IP address format
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                    return $ip;
+                }
+            }
+        }
+        
+        // Fallback to REMOTE_ADDR if no valid IP found
+        return $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    }
+
+    /**
+     * Log security events for audit trail
+     *
+     * @param string $event_type Type of security event
+     * @param array  $data       Event data
+     */
+    private function log_security_event($event_type, $data = array()) {
+        // Only log in production environment
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            return;
+        }
+        
+        $log_entry = array(
+            'timestamp' => current_time('mysql'),
+            'event_type' => $event_type,
+            'user_id' => get_current_user_id(),
+            'ip_address' => $this->get_client_ip(),
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
+            'data' => $data
+        );
+        
+        // Log to WordPress error log
+        error_log('Campaign Office Core Security Event: ' . wp_json_encode($log_entry));
+        
+        // Store critical events in database for admin review
+        if (in_array($event_type, array('event_rsvp_success', 'event_rsvp_failed', 'export_data'), true)) {
+            $this->store_security_log($log_entry);
+        }
+    }
+
+    /**
+     * Store security log in database for admin review
+     *
+     * @param array $log_entry Security log entry
+     */
+    private function store_security_log($log_entry) {
+        global $wpdb;
+        
+        $table_name = $wpdb->prefix . 'cp_security_logs';
+        
+        // Create table if it doesn't exist
+        $this->create_security_logs_table();
+        
+        $wpdb->insert($table_name, array(
+            'event_type' => $log_entry['event_type'],
+            'user_id' => $log_entry['user_id'],
+            'ip_address' => $log_entry['ip_address'],
+            'user_agent' => substr($log_entry['user_agent'], 0, 500), // Limit length
+            'event_data' => wp_json_encode($log_entry['data']),
+            'created_at' => $log_entry['timestamp']
+        ), array('%s', '%d', '%s', '%s', '%s', '%s'));
+    }
+
+    /**
+     * Create security logs table
+     */
+    private function create_security_logs_table() {
+        global $wpdb;
+        
+        $table_name = $wpdb->prefix . 'cp_security_logs';
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            event_type varchar(50) NOT NULL,
+            user_id bigint(20) UNSIGNED DEFAULT 0,
+            ip_address varchar(45) NOT NULL,
+            user_agent text DEFAULT NULL,
+            event_data text DEFAULT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY event_type (event_type),
+            KEY user_id (user_id),
+            KEY created_at (created_at)
+        ) $charset_collate;";
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
     }
 
     /**

@@ -23,6 +23,7 @@ $tables_to_drop = array(
     $wpdb->prefix . 'cp_contacts',
     $wpdb->prefix . 'cp_volunteers',
     $wpdb->prefix . 'cp_event_rsvps',
+    $wpdb->prefix . 'cp_security_logs', // Added security logs table
 );
 
 foreach ($tables_to_drop as $table) {
@@ -40,7 +41,20 @@ $options_to_delete = array(
     'cp_volunteer_db_version',
     'cp_volunteer_table_created',
     'cp_event_rsvp_table_created',
+    'cp_security_logs_table_created', // Added security logs option
+    // Rate limiting transients
+    'cp_volunteer_rate_limit_',
+    'cp_event_rsvp_rate_limit_',
+    'cp_calendar_rate_limit_',
 );
+
+// Clear rate limiting transients
+$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_cp_volunteer_rate_limit_%'");
+$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_cp_event_rsvp_rate_limit_%'");
+$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_cp_calendar_rate_limit_%'");
+$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_cp_volunteer_rate_limit_%'");
+$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_cp_event_rsvp_rate_limit_%'");
+$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_cp_calendar_rate_limit_%'");
 
 foreach ($options_to_delete as $option) {
     delete_option($option);
