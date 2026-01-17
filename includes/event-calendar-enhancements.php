@@ -494,20 +494,73 @@ class CP_Event_Calendar_Enhancements {
     }
 
     /**
-     * AJAX: Get calendar events
+     * AJAX: Get calendar events with enhanced security
      */
     public function ajax_get_calendar_events() {
-        // Verify nonce for security (passed from JavaScript)
+        // Rate limiting - maximum 10 requests per hour per IP
+        $ip = $this->get_client_ip();
+        $rate_limit_key = 'cp_calendar_rate_limit_' . md5($ip);
+        $requests = get_transient($rate_limit_key);
+        
+        if ($requests && $requests >= 10) {
+            wp_send_json_error(array('message' => __('Too many requests. Please try again later.', 'campaignpress-core')));
+        }
+
+        // Enhanced nonce verification
         if (!check_ajax_referer('cp_calendar_events', 'nonce', false)) {
             wp_send_json_error(array('message' => __('Security check failed.', 'campaignpress-core')));
         }
 
+        // Input validation and sanitization
         $view = sanitize_text_field($_POST['view'] ?? 'month');
         $date = sanitize_text_field($_POST['date'] ?? current_time('Y-m'));
+
+        // Validate view parameter
+        if (!in_array($view, array('month', 'week', 'list'), true)) {
+            wp_send_json_error(array('message' => __('Invalid calendar view.', 'campaignpress-core')));
+        }
+
+        // Validate date format (basic YYYY-MM check)
+        if (!preg_match('/^\d{4}-\d{2}$/', $date)) {
+            wp_send_json_error(array('message' => __('Invalid date format.', 'campaignpress-core')));
+        }
+
+        // Update rate limit
+        if ($requests) {
+            set_transient($rate_limit_key, $requests + 1, HOUR_IN_SECONDS);
+        } else {
+            set_transient($rate_limit_key, 1, HOUR_IN_SECONDS);
+        }
 
         $html = $this->render_calendar_view($view, $date);
 
         wp_send_json_success(array('html' => $html));
+    }
+
+    /**
+     * Get client IP address for rate limiting
+     *
+     * @return string Client IP address
+     */
+    private function get_client_ip() {
+        $ip_keys = array('HTTP_X_FORWARDED_FOR', 'HTTP_X_REAL_IP', 'HTTP_CLIENT_IP', 'REMOTE_ADDR');
+        
+        foreach ($ip_keys as $key) {
+            if (!empty($_SERVER[$key])) {
+                $ip = $_SERVER[$key];
+                // Handle comma-separated IPs (proxies)
+                if (strpos($ip, ',') !== false) {
+                    $ip = trim(explode(',', $ip)[0]);
+                }
+                // Validate IP address format
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                    return $ip;
+                }
+            }
+        }
+        
+        // Fallback to REMOTE_ADDR if no valid IP found
+        return $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     }
 
     /**

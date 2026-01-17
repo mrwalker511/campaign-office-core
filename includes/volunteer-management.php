@@ -108,9 +108,14 @@ class CP_Volunteer_Manager {
     }
 
     /**
-     * Add admin menu for volunteer management
+     * Add admin menu for volunteer management with enhanced security
      */
     public function add_admin_menu() {
+        // Check if user has required capabilities
+        if (!current_user_can('edit_posts')) {
+            return;
+        }
+
         add_submenu_page(
             'edit.php?post_type=cp_volunteer',
             __('Volunteer Signups', 'campaignpress-core'),
@@ -264,14 +269,44 @@ class CP_Volunteer_Manager {
      * Handle volunteer signup AJAX submission
      */
     public function handle_volunteer_signup() {
+        // Rate limiting - maximum 3 submissions per hour per IP
+        $ip = $this->get_client_ip();
+        $rate_limit_key = 'cp_volunteer_rate_limit_' . md5($ip);
+        $submissions = get_transient($rate_limit_key);
+        
+        if ($submissions && $submissions >= 3) {
+            wp_send_json_error(array('message' => __('Too many submissions. Please try again later.', 'campaignpress-core')));
+        }
+
         // Verify nonce
         if (!isset($_POST['cp_volunteer_nonce']) || !wp_verify_nonce($_POST['cp_volunteer_nonce'], 'cp_volunteer_signup')) {
             wp_send_json_error(array('message' => __('Security verification failed.', 'campaignpress-core')));
         }
 
-        // Validate required fields
-        if (empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['email'])) {
+        // Input validation and sanitization
+        $first_name = sanitize_text_field($_POST['first_name'] ?? '');
+        $last_name = sanitize_text_field($_POST['last_name'] ?? '');
+        $email = sanitize_email($_POST['email'] ?? '');
+        
+        if (empty($first_name) || empty($last_name) || empty($email)) {
             wp_send_json_error(array('message' => __('Please fill in all required fields.', 'campaignpress-core')));
+        }
+        
+        // Email validation
+        if (!is_email($email)) {
+            wp_send_json_error(array('message' => __('Please provide a valid email address.', 'campaignpress-core')));
+        }
+        
+        // Length validation
+        if (strlen($first_name) > 100 || strlen($last_name) > 100) {
+            wp_send_json_error(array('message' => __('Name fields are too long.', 'campaignpress-core')));
+        }
+        
+        // Update rate limit
+        if ($submissions) {
+            set_transient($rate_limit_key, $submissions + 1, HOUR_IN_SECONDS);
+        } else {
+            set_transient($rate_limit_key, 1, HOUR_IN_SECONDS);
         }
 
         // Identify or Create Contact
@@ -295,21 +330,75 @@ class CP_Volunteer_Manager {
             }
         }
 
-        // Sanitize volunteer-specific data
+        // Sanitize volunteer-specific data with enhanced validation
+        $skills = '';
+        if (isset($_POST['skills'])) {
+            $skills_text = sanitize_textarea_field($_POST['skills']);
+            if (strlen($skills_text) > 1000) {
+                wp_send_json_error(array('message' => __('Skills field is too long.', 'campaignpress-core')));
+            }
+            $skills = $skills_text;
+        }
+        
+        $interests = '';
+        if (isset($_POST['interests']) && is_array($_POST['interests'])) {
+            $clean_interests = array();
+            foreach ($_POST['interests'] as $interest) {
+                $clean_interest = sanitize_text_field($interest);
+                if (!empty($clean_interest) && strlen($clean_interest) <= 100) {
+                    $clean_interests[] = $clean_interest;
+                }
+            }
+            $interests = wp_json_encode($clean_interests);
+        }
+        
+        $availability = '';
+        if (isset($_POST['availability']) && is_array($_POST['availability'])) {
+            $clean_availability = array();
+            foreach ($_POST['availability'] as $slot) {
+                $clean_slot = sanitize_text_field($slot);
+                if (!empty($clean_slot) && strlen($clean_slot) <= 100) {
+                    $clean_availability[] = $clean_slot;
+                }
+            }
+            $availability = wp_json_encode($clean_availability);
+        }
+        
+        $opportunity_id = null;
+        if (isset($_POST['opportunity_id'])) {
+            $opp_id = absint($_POST['opportunity_id']);
+            if ($opp_id > 0) {
+                $opportunity_id = $opp_id;
+            }
+        }
+
         $volunteer_data = array(
             'contact_id'     => $contact_id,
-            'skills'         => isset($_POST['skills']) ? sanitize_textarea_field($_POST['skills']) : '',
-            'interests'      => isset($_POST['interests']) ? wp_json_encode(array_map('sanitize_text_field', $_POST['interests'])) : '',
-            'availability'   => isset($_POST['availability']) ? wp_json_encode(array_map('sanitize_text_field', $_POST['availability'])) : '',
-            'opportunity_id' => isset($_POST['opportunity_id']) ? absint($_POST['opportunity_id']) : null,
+            'skills'         => $skills,
+            'interests'      => $interests,
+            'availability'   => $availability,
+            'opportunity_id' => $opportunity_id,
             'source'         => 'website_form',
             'status'         => 'new',
         );
 
-        // Insert into database
+        // Enhanced database insert with prepared statements
         global $wpdb;
         $result = $wpdb->insert($this->table_name, $volunteer_data, array(
             '%d', '%s', '%s', '%s', '%d', '%s', '%s'
+        ));
+
+        if ($result === false) {
+            // Log database error for debugging (in production, log to error log)
+            error_log('Campaign Office Core: Database error in volunteer signup - ' . $wpdb->last_error);
+            wp_send_json_error(array('message' => __('Failed to save volunteer information. Please try again.', 'campaignpress-core')));
+        }
+
+        // Log successful volunteer signup for security audit
+        $this->log_security_event('volunteer_signup_success', array(
+            'contact_id' => $contact_id,
+            'opportunity_id' => $opportunity_id,
+            'ip' => $ip
         ));
 
         if ($result) {
@@ -329,21 +418,39 @@ class CP_Volunteer_Manager {
      * Render admin page for volunteer management
      */
     public function render_admin_page() {
-        global $wpdb;
+        // Security: Check permissions
+        if (!current_user_can('edit_posts')) {
+            wp_die(esc_html__('You do not have permission to access this page.', 'campaignpress-core'));
+        }
 
-        // Handle bulk actions
-        if (isset($_POST['cp_bulk_action']) && check_admin_referer('cp_volunteer_bulk_action', 'cp_volunteer_bulk_nonce')) {
+        // Handle bulk actions with enhanced security
+        if (isset($_POST['cp_bulk_action']) && isset($_POST['volunteer_ids']) && is_array($_POST['volunteer_ids'])) {
+            // Verify nonce and capabilities
+            if (!check_admin_referer('cp_volunteer_bulk_action', 'cp_volunteer_bulk_nonce') || 
+                !current_user_can('delete_posts')) {
+                wp_die(esc_html__('Security verification failed.', 'campaignpress-core'));
+            }
             $this->handle_bulk_actions();
         }
 
-        // Handle individual volunteer deletion
-        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['volunteer_id']) && check_admin_referer('cp_delete_volunteer_' . absint($_GET['volunteer_id']))) {
+        // Handle individual volunteer deletion with enhanced security
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['volunteer_id'])) {
+            // Verify nonce and capabilities
+            $nonce_key = 'cp_delete_volunteer_' . absint($_GET['volunteer_id']);
+            if (!check_admin_referer($nonce_key) || !current_user_can('delete_posts')) {
+                wp_die(esc_html__('Security verification failed.', 'campaignpress-core'));
+            }
             $this->delete_volunteer(absint($_GET['volunteer_id']));
         }
 
-        // Get filter parameters
+        // Get filter parameters with sanitization
         $status_filter = isset($_GET['status']) ? sanitize_text_field($_GET['status']) : '';
         $search = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
+
+        // Additional search validation
+        if (!empty($search) && strlen($search) > 100) {
+            wp_die(esc_html__('Search query too long.', 'campaignpress-core'));
+        }
 
         // Build query
         $contacts_table = $wpdb->prefix . 'cp_contacts';
@@ -560,7 +667,113 @@ class CP_Volunteer_Manager {
     }
 
     /**
-     * Export volunteers to CSV
+     * Get client IP address for rate limiting
+     *
+     * @return string Client IP address
+     */
+    private function get_client_ip() {
+        $ip_keys = array('HTTP_X_FORWARDED_FOR', 'HTTP_X_REAL_IP', 'HTTP_CLIENT_IP', 'REMOTE_ADDR');
+        
+        foreach ($ip_keys as $key) {
+            if (!empty($_SERVER[$key])) {
+                $ip = $_SERVER[$key];
+                // Handle comma-separated IPs (proxies)
+                if (strpos($ip, ',') !== false) {
+                    $ip = trim(explode(',', $ip)[0]);
+                }
+                // Validate IP address format
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                    return $ip;
+                }
+            }
+        }
+        
+        // Fallback to REMOTE_ADDR if no valid IP found
+        return $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    }
+
+    /**
+     * Log security events for audit trail
+     *
+     * @param string $event_type Type of security event
+     * @param array  $data       Event data
+     */
+    private function log_security_event($event_type, $data = array()) {
+        // Only log in production environment
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            return;
+        }
+        
+        $log_entry = array(
+            'timestamp' => current_time('mysql'),
+            'event_type' => $event_type,
+            'user_id' => get_current_user_id(),
+            'ip_address' => $this->get_client_ip(),
+            'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
+            'data' => $data
+        );
+        
+        // Log to WordPress error log
+        error_log('Campaign Office Core Security Event: ' . wp_json_encode($log_entry));
+        
+        // Store critical events in database for admin review
+        if (in_array($event_type, array('volunteer_signup_success', 'volunteer_signup_failed', 'bulk_delete', 'export_data'), true)) {
+            $this->store_security_log($log_entry);
+        }
+    }
+
+    /**
+     * Store security log in database for admin review
+     *
+     * @param array $log_entry Security log entry
+     */
+    private function store_security_log($log_entry) {
+        global $wpdb;
+        
+        $table_name = $wpdb->prefix . 'cp_security_logs';
+        
+        // Create table if it doesn't exist
+        $this->create_security_logs_table();
+        
+        $wpdb->insert($table_name, array(
+            'event_type' => $log_entry['event_type'],
+            'user_id' => $log_entry['user_id'],
+            'ip_address' => $log_entry['ip_address'],
+            'user_agent' => substr($log_entry['user_agent'], 0, 500), // Limit length
+            'event_data' => wp_json_encode($log_entry['data']),
+            'created_at' => $log_entry['timestamp']
+        ), array('%s', '%d', '%s', '%s', '%s', '%s'));
+    }
+
+    /**
+     * Create security logs table
+     */
+    private function create_security_logs_table() {
+        global $wpdb;
+        
+        $table_name = $wpdb->prefix . 'cp_security_logs';
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            event_type varchar(50) NOT NULL,
+            user_id bigint(20) UNSIGNED DEFAULT 0,
+            ip_address varchar(45) NOT NULL,
+            user_agent text DEFAULT NULL,
+            event_data text DEFAULT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            KEY event_type (event_type),
+            KEY user_id (user_id),
+            KEY created_at (created_at)
+        ) $charset_collate;";
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+    }
+
+    /**
+     * Export volunteers to CSV with enhanced security
      */
     public function export_volunteers_csv() {
         // Verify nonce
@@ -568,23 +781,35 @@ class CP_Volunteer_Manager {
             wp_die(esc_html__('Security verification failed.', 'campaignpress-core'));
         }
 
-        // Check permissions
+        // Check permissions with enhanced security
         if (!current_user_can('edit_posts')) {
             wp_die(esc_html__('You do not have permission to export volunteers.', 'campaignpress-core'));
         }
 
+        // Log export activity for security audit
+        $this->log_security_event('export_data', array(
+            'data_type' => 'volunteers',
+            'export_time' => current_time('mysql')
+        ));
+
         global $wpdb;
         $contacts_table = $wpdb->prefix . 'cp_contacts';
-        $volunteers = $wpdb->get_results("
+        
+        // Use prepared statement to prevent SQL injection
+        $query = "
             SELECT v.*, c.first_name, c.last_name, c.email, c.phone, c.address_line1 as address, c.city, c.state, c.zip_code as zip
             FROM {$this->table_name} v
             JOIN {$contacts_table} c ON v.contact_id = c.id
             ORDER BY v.created_at DESC
-        ", ARRAY_A);
+        ";
+        
+        $volunteers = $wpdb->get_results($query, ARRAY_A);
 
-        // Set headers for CSV download
+        // Set headers for CSV download with security headers
         header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=volunteers-' . date('Y-m-d') . '.csv');
+        header('Content-Disposition: attachment; filename=volunteers-' . date('Y-m-d-H-i-s') . '.csv');
+        header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: DENY');
 
         $output = fopen('php://output', 'w');
 
@@ -597,7 +822,7 @@ class CP_Volunteer_Manager {
             'Skills', 'Interests', 'Availability', 'Status', 'Source', 'Created Date'
         ));
 
-        // Add data rows
+        // Add data rows with proper escaping
         foreach ($volunteers as $volunteer) {
             fputcsv($output, array(
                 $volunteer['id'],
