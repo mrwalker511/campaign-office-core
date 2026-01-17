@@ -1,6 +1,6 @@
-# Changelog - Campaign Office Core Plugin
+# Changelog - CampaignPress Core Plugin
 
-All notable changes to the Campaign Office Core plugin will be documented in this file.
+All notable changes to the CampaignPress Core plugin will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0] - 2026-01-10
 
 ### Changed
-- **Version Alignment:** Updated version to 2.0.0 to align with Campaign Office theme version
+- **Version Alignment:** Updated version to 2.0.0 to align with CampaignPress theme version
 - **Documentation:** Comprehensive code review and documentation updates
 - **Database:** Optimized contact manager table with better indexing
 - **Compatibility:** Verified WordPress 6.9 compatibility

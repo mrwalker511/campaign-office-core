@@ -5,7 +5,7 @@
  * Provides volunteer data capture, contact management, and basic CRM functionality for the free version.
  * Volunteers can sign up through forms, and campaign staff can manage contacts in the admin.
  *
- * @package Campaign_Office_Core
+ * @package CampaignPress_Core
  * @since 2.0.0
  */
 
@@ -113,8 +113,8 @@ class CP_Volunteer_Manager {
     public function add_admin_menu() {
         add_submenu_page(
             'edit.php?post_type=cp_volunteer',
-            __('Volunteer Signups', 'campaign-office-core'),
-            __('Signups', 'campaign-office-core'),
+            __('Volunteer Signups', 'campaignpress-core'),
+            __('Signups', 'campaignpress-core'),
             'edit_posts',
             'cp-volunteer-signups',
             array($this, 'render_admin_page')
@@ -155,8 +155,8 @@ class CP_Volunteer_Manager {
     public function render_volunteer_form($atts) {
         $atts = shortcode_atts(array(
             'opportunity_id' => '',
-            'title' => __('Volunteer Sign Up', 'campaign-office-core'),
-            'submit_text' => __('Sign Me Up!', 'campaign-office-core'),
+            'title' => __('Volunteer Sign Up', 'campaignpress-core'),
+            'submit_text' => __('Sign Me Up!', 'campaignpress-core'),
         ), $atts);
 
         // Allow themes/plugins to modify shortcode attributes
@@ -174,75 +174,75 @@ class CP_Volunteer_Manager {
 
                 <div class="cp-form-row">
                     <div class="cp-form-group">
-                        <label for="cp_volunteer_first_name"><?php esc_html_e('First Name', 'campaign-office-core'); ?> <span class="required">*</span></label>
+                        <label for="cp_volunteer_first_name"><?php esc_html_e('First Name', 'campaignpress-core'); ?> <span class="required">*</span></label>
                         <input type="text" id="cp_volunteer_first_name" name="first_name" required>
                     </div>
 
                     <div class="cp-form-group">
-                        <label for="cp_volunteer_last_name"><?php esc_html_e('Last Name', 'campaign-office-core'); ?> <span class="required">*</span></label>
+                        <label for="cp_volunteer_last_name"><?php esc_html_e('Last Name', 'campaignpress-core'); ?> <span class="required">*</span></label>
                         <input type="text" id="cp_volunteer_last_name" name="last_name" required>
                     </div>
                 </div>
 
                 <div class="cp-form-row">
                     <div class="cp-form-group">
-                        <label for="cp_volunteer_email"><?php esc_html_e('Email', 'campaign-office-core'); ?> <span class="required">*</span></label>
+                        <label for="cp_volunteer_email"><?php esc_html_e('Email', 'campaignpress-core'); ?> <span class="required">*</span></label>
                         <input type="email" id="cp_volunteer_email" name="email" required>
                     </div>
 
                     <div class="cp-form-group">
-                        <label for="cp_volunteer_phone"><?php esc_html_e('Phone', 'campaign-office-core'); ?></label>
+                        <label for="cp_volunteer_phone"><?php esc_html_e('Phone', 'campaignpress-core'); ?></label>
                         <input type="tel" id="cp_volunteer_phone" name="phone">
                     </div>
                 </div>
 
                 <div class="cp-form-group">
-                    <label for="cp_volunteer_address"><?php esc_html_e('Street Address', 'campaign-office-core'); ?></label>
+                    <label for="cp_volunteer_address"><?php esc_html_e('Street Address', 'campaignpress-core'); ?></label>
                     <input type="text" id="cp_volunteer_address" name="address">
                 </div>
 
                 <div class="cp-form-row">
                     <div class="cp-form-group">
-                        <label for="cp_volunteer_city"><?php esc_html_e('City', 'campaign-office-core'); ?></label>
+                        <label for="cp_volunteer_city"><?php esc_html_e('City', 'campaignpress-core'); ?></label>
                         <input type="text" id="cp_volunteer_city" name="city">
                     </div>
 
                     <div class="cp-form-group cp-form-group-small">
-                        <label for="cp_volunteer_state"><?php esc_html_e('State', 'campaign-office-core'); ?></label>
+                        <label for="cp_volunteer_state"><?php esc_html_e('State', 'campaignpress-core'); ?></label>
                         <input type="text" id="cp_volunteer_state" name="state" maxlength="2" placeholder="CA">
                     </div>
 
                     <div class="cp-form-group cp-form-group-small">
-                        <label for="cp_volunteer_zip"><?php esc_html_e('ZIP', 'campaign-office-core'); ?></label>
+                        <label for="cp_volunteer_zip"><?php esc_html_e('ZIP', 'campaignpress-core'); ?></label>
                         <input type="text" id="cp_volunteer_zip" name="zip" maxlength="10">
                     </div>
                 </div>
 
                 <div class="cp-form-group">
-                    <label><?php esc_html_e('I am interested in:', 'campaign-office-core'); ?></label>
+                    <label><?php esc_html_e('I am interested in:', 'campaignpress-core'); ?></label>
                     <div class="cp-checkbox-group">
-                        <label><input type="checkbox" name="interests[]" value="canvassing"> <?php esc_html_e('Door-to-door canvassing', 'campaign-office-core'); ?></label>
-                        <label><input type="checkbox" name="interests[]" value="phone_banking"> <?php esc_html_e('Phone banking', 'campaign-office-core'); ?></label>
-                        <label><input type="checkbox" name="interests[]" value="event_support"> <?php esc_html_e('Event support', 'campaign-office-core'); ?></label>
-                        <label><input type="checkbox" name="interests[]" value="data_entry"> <?php esc_html_e('Data entry', 'campaign-office-core'); ?></label>
-                        <label><input type="checkbox" name="interests[]" value="social_media"> <?php esc_html_e('Social media outreach', 'campaign-office-core'); ?></label>
-                        <label><input type="checkbox" name="interests[]" value="fundraising"> <?php esc_html_e('Fundraising', 'campaign-office-core'); ?></label>
+                        <label><input type="checkbox" name="interests[]" value="canvassing"> <?php esc_html_e('Door-to-door canvassing', 'campaignpress-core'); ?></label>
+                        <label><input type="checkbox" name="interests[]" value="phone_banking"> <?php esc_html_e('Phone banking', 'campaignpress-core'); ?></label>
+                        <label><input type="checkbox" name="interests[]" value="event_support"> <?php esc_html_e('Event support', 'campaignpress-core'); ?></label>
+                        <label><input type="checkbox" name="interests[]" value="data_entry"> <?php esc_html_e('Data entry', 'campaignpress-core'); ?></label>
+                        <label><input type="checkbox" name="interests[]" value="social_media"> <?php esc_html_e('Social media outreach', 'campaignpress-core'); ?></label>
+                        <label><input type="checkbox" name="interests[]" value="fundraising"> <?php esc_html_e('Fundraising', 'campaignpress-core'); ?></label>
                     </div>
                 </div>
 
                 <div class="cp-form-group">
-                    <label><?php esc_html_e('Availability:', 'campaign-office-core'); ?></label>
+                    <label><?php esc_html_e('Availability:', 'campaignpress-core'); ?></label>
                     <div class="cp-checkbox-group">
-                        <label><input type="checkbox" name="availability[]" value="weekday_mornings"> <?php esc_html_e('Weekday mornings', 'campaign-office-core'); ?></label>
-                        <label><input type="checkbox" name="availability[]" value="weekday_afternoons"> <?php esc_html_e('Weekday afternoons', 'campaign-office-core'); ?></label>
-                        <label><input type="checkbox" name="availability[]" value="weekday_evenings"> <?php esc_html_e('Weekday evenings', 'campaign-office-core'); ?></label>
-                        <label><input type="checkbox" name="availability[]" value="weekends"> <?php esc_html_e('Weekends', 'campaign-office-core'); ?></label>
+                        <label><input type="checkbox" name="availability[]" value="weekday_mornings"> <?php esc_html_e('Weekday mornings', 'campaignpress-core'); ?></label>
+                        <label><input type="checkbox" name="availability[]" value="weekday_afternoons"> <?php esc_html_e('Weekday afternoons', 'campaignpress-core'); ?></label>
+                        <label><input type="checkbox" name="availability[]" value="weekday_evenings"> <?php esc_html_e('Weekday evenings', 'campaignpress-core'); ?></label>
+                        <label><input type="checkbox" name="availability[]" value="weekends"> <?php esc_html_e('Weekends', 'campaignpress-core'); ?></label>
                     </div>
                 </div>
 
                 <div class="cp-form-group">
-                    <label for="cp_volunteer_skills"><?php esc_html_e('Skills/Experience (optional)', 'campaign-office-core'); ?></label>
-                    <textarea id="cp_volunteer_skills" name="skills" rows="3" placeholder="<?php esc_attr_e('e.g., graphic design, Spanish speaker, social media marketing', 'campaign-office-core'); ?>"></textarea>
+                    <label for="cp_volunteer_skills"><?php esc_html_e('Skills/Experience (optional)', 'campaignpress-core'); ?></label>
+                    <textarea id="cp_volunteer_skills" name="skills" rows="3" placeholder="<?php esc_attr_e('e.g., graphic design, Spanish speaker, social media marketing', 'campaignpress-core'); ?>"></textarea>
                 </div>
 
                 <div class="cp-form-message"></div>
@@ -266,12 +266,12 @@ class CP_Volunteer_Manager {
     public function handle_volunteer_signup() {
         // Verify nonce
         if (!isset($_POST['cp_volunteer_nonce']) || !wp_verify_nonce($_POST['cp_volunteer_nonce'], 'cp_volunteer_signup')) {
-            wp_send_json_error(array('message' => __('Security verification failed.', 'campaign-office-core')));
+            wp_send_json_error(array('message' => __('Security verification failed.', 'campaignpress-core')));
         }
 
         // Validate required fields
         if (empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['email'])) {
-            wp_send_json_error(array('message' => __('Please fill in all required fields.', 'campaign-office-core')));
+            wp_send_json_error(array('message' => __('Please fill in all required fields.', 'campaignpress-core')));
         }
 
         // Identify or Create Contact
@@ -317,11 +317,11 @@ class CP_Volunteer_Manager {
             do_action('cp_volunteer_signup_success', $wpdb->insert_id, $volunteer_data);
 
             wp_send_json_success(array(
-                'message' => __('Thank you for signing up! We\'ll be in touch soon.', 'campaign-office-core'),
+                'message' => __('Thank you for signing up! We\'ll be in touch soon.', 'campaignpress-core'),
                 'volunteer_id' => $wpdb->insert_id
             ));
         } else {
-            wp_send_json_error(array('message' => __('Failed to save volunteer information. Please try again.', 'campaign-office-core')));
+            wp_send_json_error(array('message' => __('Failed to save volunteer information. Please try again.', 'campaignpress-core')));
         }
     }
 
@@ -392,17 +392,17 @@ class CP_Volunteer_Manager {
 
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e('Volunteer Signups', 'campaign-office-core'); ?></h1>
-            <a href="<?php echo esc_url(admin_url('post-new.php?post_type=cp_volunteer')); ?>" class="page-title-action"><?php esc_html_e('Add Volunteer Opportunity', 'campaign-office-core'); ?></a>
-            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=cp_export_volunteers'), 'cp_export_volunteers')); ?>" class="page-title-action"><?php esc_html_e('Export to CSV', 'campaign-office-core'); ?></a>
+            <h1 class="wp-heading-inline"><?php esc_html_e('Volunteer Signups', 'campaignpress-core'); ?></h1>
+            <a href="<?php echo esc_url(admin_url('post-new.php?post_type=cp_volunteer')); ?>" class="page-title-action"><?php esc_html_e('Add Volunteer Opportunity', 'campaignpress-core'); ?></a>
+            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=cp_export_volunteers'), 'cp_export_volunteers')); ?>" class="page-title-action"><?php esc_html_e('Export to CSV', 'campaignpress-core'); ?></a>
 
             <hr class="wp-header-end">
 
             <ul class="subsubsub">
-                <li><a href="<?php echo esc_url(remove_query_arg('status')); ?>" <?php echo empty($status_filter) ? 'class="current"' : ''; ?>><?php esc_html_e('All', 'campaign-office-core'); ?> <span class="count">(<?php echo esc_html($total_volunteers); ?>)</span></a> |</li>
-                <li><a href="<?php echo esc_url(add_query_arg('status', 'new')); ?>" <?php echo $status_filter === 'new' ? 'class="current"' : ''; ?>><?php esc_html_e('New', 'campaign-office-core'); ?> <span class="count">(<?php echo isset($status_counts['new']) ? esc_html($status_counts['new']->count) : '0'; ?>)</span></a> |</li>
-                <li><a href="<?php echo esc_url(add_query_arg('status', 'contacted')); ?>" <?php echo $status_filter === 'contacted' ? 'class="current"' : ''; ?>><?php esc_html_e('Contacted', 'campaign-office-core'); ?> <span class="count">(<?php echo isset($status_counts['contacted']) ? esc_html($status_counts['contacted']->count) : '0'; ?>)</span></a> |</li>
-                <li><a href="<?php echo esc_url(add_query_arg('status', 'active')); ?>" <?php echo $status_filter === 'active' ? 'class="current"' : ''; ?>><?php esc_html_e('Active', 'campaign-office-core'); ?> <span class="count">(<?php echo isset($status_counts['active']) ? esc_html($status_counts['active']->count) : '0'; ?>)</span></a></li>
+                <li><a href="<?php echo esc_url(remove_query_arg('status')); ?>" <?php echo empty($status_filter) ? 'class="current"' : ''; ?>><?php esc_html_e('All', 'campaignpress-core'); ?> <span class="count">(<?php echo esc_html($total_volunteers); ?>)</span></a> |</li>
+                <li><a href="<?php echo esc_url(add_query_arg('status', 'new')); ?>" <?php echo $status_filter === 'new' ? 'class="current"' : ''; ?>><?php esc_html_e('New', 'campaignpress-core'); ?> <span class="count">(<?php echo isset($status_counts['new']) ? esc_html($status_counts['new']->count) : '0'; ?>)</span></a> |</li>
+                <li><a href="<?php echo esc_url(add_query_arg('status', 'contacted')); ?>" <?php echo $status_filter === 'contacted' ? 'class="current"' : ''; ?>><?php esc_html_e('Contacted', 'campaignpress-core'); ?> <span class="count">(<?php echo isset($status_counts['contacted']) ? esc_html($status_counts['contacted']->count) : '0'; ?>)</span></a> |</li>
+                <li><a href="<?php echo esc_url(add_query_arg('status', 'active')); ?>" <?php echo $status_filter === 'active' ? 'class="current"' : ''; ?>><?php esc_html_e('Active', 'campaignpress-core'); ?> <span class="count">(<?php echo isset($status_counts['active']) ? esc_html($status_counts['active']->count) : '0'; ?>)</span></a></li>
             </ul>
 
             <form method="get">
@@ -413,9 +413,9 @@ class CP_Volunteer_Manager {
                 <?php endif; ?>
 
                 <p class="search-box">
-                    <label class="screen-reader-text" for="volunteer-search-input"><?php esc_html_e('Search Volunteers:', 'campaign-office-core'); ?></label>
+                    <label class="screen-reader-text" for="volunteer-search-input"><?php esc_html_e('Search Volunteers:', 'campaignpress-core'); ?></label>
                     <input type="search" id="volunteer-search-input" name="s" value="<?php echo esc_attr($search); ?>">
-                    <input type="submit" class="button" value="<?php esc_attr_e('Search Volunteers', 'campaign-office-core'); ?>">
+                    <input type="submit" class="button" value="<?php esc_attr_e('Search Volunteers', 'campaignpress-core'); ?>">
                 </p>
             </form>
 
@@ -425,12 +425,12 @@ class CP_Volunteer_Manager {
                 <div class="tablenav top">
                     <div class="alignleft actions bulkactions">
                         <select name="cp_bulk_action">
-                            <option value=""><?php esc_html_e('Bulk Actions', 'campaign-office-core'); ?></option>
-                            <option value="contacted"><?php esc_html_e('Mark as Contacted', 'campaign-office-core'); ?></option>
-                            <option value="active"><?php esc_html_e('Mark as Active', 'campaign-office-core'); ?></option>
-                            <option value="delete"><?php esc_html_e('Delete', 'campaign-office-core'); ?></option>
+                            <option value=""><?php esc_html_e('Bulk Actions', 'campaignpress-core'); ?></option>
+                            <option value="contacted"><?php esc_html_e('Mark as Contacted', 'campaignpress-core'); ?></option>
+                            <option value="active"><?php esc_html_e('Mark as Active', 'campaignpress-core'); ?></option>
+                            <option value="delete"><?php esc_html_e('Delete', 'campaignpress-core'); ?></option>
                         </select>
-                        <input type="submit" class="button action" value="<?php esc_attr_e('Apply', 'campaign-office-core'); ?>">
+                        <input type="submit" class="button action" value="<?php esc_attr_e('Apply', 'campaignpress-core'); ?>">
                     </div>
                 </div>
 
@@ -440,19 +440,19 @@ class CP_Volunteer_Manager {
                             <td class="manage-column column-cb check-column">
                                 <input type="checkbox" id="cb-select-all">
                             </td>
-                            <th><?php esc_html_e('Name', 'campaign-office-core'); ?></th>
-                            <th><?php esc_html_e('Email', 'campaign-office-core'); ?></th>
-                            <th><?php esc_html_e('Phone', 'campaign-office-core'); ?></th>
-                            <th><?php esc_html_e('Location', 'campaign-office-core'); ?></th>
-                            <th><?php esc_html_e('Interests', 'campaign-office-core'); ?></th>
-                            <th><?php esc_html_e('Status', 'campaign-office-core'); ?></th>
-                            <th><?php esc_html_e('Date', 'campaign-office-core'); ?></th>
+                            <th><?php esc_html_e('Name', 'campaignpress-core'); ?></th>
+                            <th><?php esc_html_e('Email', 'campaignpress-core'); ?></th>
+                            <th><?php esc_html_e('Phone', 'campaignpress-core'); ?></th>
+                            <th><?php esc_html_e('Location', 'campaignpress-core'); ?></th>
+                            <th><?php esc_html_e('Interests', 'campaignpress-core'); ?></th>
+                            <th><?php esc_html_e('Status', 'campaignpress-core'); ?></th>
+                            <th><?php esc_html_e('Date', 'campaignpress-core'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php if (empty($volunteers)) : ?>
                             <tr>
-                                <td colspan="8"><?php esc_html_e('No volunteers found.', 'campaign-office-core'); ?></td>
+                                <td colspan="8"><?php esc_html_e('No volunteers found.', 'campaignpress-core'); ?></td>
                             </tr>
                         <?php else : ?>
                             <?php foreach ($volunteers as $volunteer) : ?>
@@ -463,8 +463,8 @@ class CP_Volunteer_Manager {
                                     <td>
                                         <strong><?php echo esc_html($volunteer->first_name . ' ' . $volunteer->last_name); ?></strong>
                                         <div class="row-actions">
-                                            <span><a href="mailto:<?php echo esc_attr($volunteer->email); ?>"><?php esc_html_e('Email', 'campaign-office-core'); ?></a> | </span>
-                                            <span class="trash"><a href="<?php echo esc_url(wp_nonce_url(add_query_arg(array('action' => 'delete', 'volunteer_id' => $volunteer->id)), 'cp_delete_volunteer_' . $volunteer->id)); ?>" class="submitdelete"><?php esc_html_e('Delete', 'campaign-office-core'); ?></a></span>
+                                            <span><a href="mailto:<?php echo esc_attr($volunteer->email); ?>"><?php esc_html_e('Email', 'campaignpress-core'); ?></a> | </span>
+                                            <span class="trash"><a href="<?php echo esc_url(wp_nonce_url(add_query_arg(array('action' => 'delete', 'volunteer_id' => $volunteer->id)), 'cp_delete_volunteer_' . $volunteer->id)); ?>" class="submitdelete"><?php esc_html_e('Delete', 'campaignpress-core'); ?></a></span>
                                         </div>
                                     </td>
                                     <td><?php echo esc_html($volunteer->email); ?></td>
@@ -532,7 +532,7 @@ class CP_Volunteer_Manager {
             foreach ($volunteer_ids as $id) {
                 $wpdb->delete($this->table_name, array('id' => $id), array('%d'));
             }
-            echo '<div class="notice notice-success"><p>' . esc_html__('Volunteers deleted.', 'campaign-office-core') . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . esc_html__('Volunteers deleted.', 'campaignpress-core') . '</p></div>';
         } elseif (in_array($action, array('contacted', 'active'), true)) {
             foreach ($volunteer_ids as $id) {
                 $wpdb->update(
@@ -543,7 +543,7 @@ class CP_Volunteer_Manager {
                     array('%d')
                 );
             }
-            echo '<div class="notice notice-success"><p>' . esc_html__('Volunteers updated.', 'campaign-office-core') . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . esc_html__('Volunteers updated.', 'campaignpress-core') . '</p></div>';
         }
     }
 
@@ -556,7 +556,7 @@ class CP_Volunteer_Manager {
         global $wpdb;
         $wpdb->delete($this->table_name, array('id' => $volunteer_id), array('%d'));
 
-        echo '<div class="notice notice-success"><p>' . esc_html__('Volunteer deleted.', 'campaign-office-core') . '</p></div>';
+        echo '<div class="notice notice-success"><p>' . esc_html__('Volunteer deleted.', 'campaignpress-core') . '</p></div>';
     }
 
     /**
@@ -565,12 +565,12 @@ class CP_Volunteer_Manager {
     public function export_volunteers_csv() {
         // Verify nonce
         if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'cp_export_volunteers')) {
-            wp_die(esc_html__('Security verification failed.', 'campaign-office-core'));
+            wp_die(esc_html__('Security verification failed.', 'campaignpress-core'));
         }
 
         // Check permissions
         if (!current_user_can('edit_posts')) {
-            wp_die(esc_html__('You do not have permission to export volunteers.', 'campaign-office-core'));
+            wp_die(esc_html__('You do not have permission to export volunteers.', 'campaignpress-core'));
         }
 
         global $wpdb;

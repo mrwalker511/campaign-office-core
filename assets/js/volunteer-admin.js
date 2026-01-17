@@ -1,5 +1,5 @@
 /**
- * Campaign Office Core - Volunteer Admin Scripts
+ * CampaignPress Core - Volunteer Admin Scripts
  *
  * @package Campaign_Office_Core
  * @since 1.0.0

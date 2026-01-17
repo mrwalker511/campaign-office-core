@@ -1,6 +1,6 @@
-# Campaign Office Core
+# CampaignPress Core
 
-Core functionality plugin for the Campaign Office WordPress theme. This plugin provides essential campaign management features including custom post types, volunteer management, and event management that persist across theme changes.
+Core functionality plugin for the CampaignPress WordPress theme. This plugin provides essential campaign management features including custom post types, volunteer management, and event management that persist across theme changes.
 
 ## Features
 
@@ -50,7 +50,7 @@ Core functionality plugin for the Campaign Office WordPress theme. This plugin p
 
 - WordPress 5.8 or higher
 - PHP 7.4 or higher
-- Campaign Office theme (recommended but not required)
+- CampaignPress theme (recommended but not required)
 
 ## Usage
 
@@ -170,7 +170,7 @@ add_filter('campaign_office_core_features', function($features) {
 
 ## Theme Integration
 
-The Campaign Office theme automatically detects this plugin and integrates seamlessly. If you're using a different theme:
+The CampaignPress theme automatically detects this plugin and integrates seamlessly. If you're using a different theme:
 
 1. The plugin works standalone with default WordPress styling
 2. Custom templates can be added to your theme
@@ -188,7 +188,7 @@ All data created by this plugin (volunteers, RSVPs, custom posts) persists even 
 ## Compatibility
 
 - Works with any WordPress theme
-- Optimized for Campaign Office theme
+- Optimized for CampaignPress theme
 - Compatible with popular page builders
 - REST API enabled for all post types
 - Gutenberg block editor ready

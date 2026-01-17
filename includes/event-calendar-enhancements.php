@@ -3,7 +3,7 @@
  * Advanced Event Calendar Enhancements
  *
  * Adds calendar grid views, iCal export, and Google Maps integration
- * to the existing Campaign Office event management system.
+ * to the existing CampaignPress event management system.
  *
  * Features:
  * - Calendar grid views (month, week, day)
@@ -12,7 +12,7 @@
  * - Event filtering and search
  * - Mobile-responsive calendar layouts
  *
- * @package Campaign_Office_Core
+ * @package CampaignPress_Core
  * @since 1.0.0
  */
 
@@ -63,8 +63,8 @@ class CP_Event_Calendar_Enhancements {
     public function add_admin_menu() {
         add_submenu_page(
             'edit.php?post_type=cp_event',
-            __('Calendar View', 'campaign-office-core'),
-            __('Calendar', 'campaign-office-core'),
+            __('Calendar View', 'campaignpress-core'),
+            __('Calendar', 'campaignpress-core'),
             'edit_posts',
             'cp-event-calendar',
             array($this, 'render_admin_calendar_page')
@@ -77,7 +77,7 @@ class CP_Event_Calendar_Enhancements {
     public function add_location_meta_box() {
         add_meta_box(
             'cp_event_location',
-            __('Event Location', 'campaign-office-core'),
+            __('Event Location', 'campaignpress-core'),
             array($this, 'render_location_meta_box'),
             'cp_event',
             'normal',
@@ -101,39 +101,39 @@ class CP_Event_Calendar_Enhancements {
         ?>
         <div class="cp-event-location-fields">
             <p>
-                <label for="cp_event_venue"><strong><?php esc_html_e('Venue Name:', 'campaign-office-core'); ?></strong></label><br>
+                <label for="cp_event_venue"><strong><?php esc_html_e('Venue Name:', 'campaignpress-core'); ?></strong></label><br>
                 <input type="text" id="cp_event_venue" name="cp_event_venue" value="<?php echo esc_attr($venue); ?>" class="widefat">
             </p>
             <p>
-                <label for="cp_event_address"><strong><?php esc_html_e('Street Address:', 'campaign-office-core'); ?></strong></label><br>
+                <label for="cp_event_address"><strong><?php esc_html_e('Street Address:', 'campaignpress-core'); ?></strong></label><br>
                 <input type="text" id="cp_event_address" name="cp_event_address" value="<?php echo esc_attr($address); ?>" class="widefat">
             </p>
             <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
                 <p>
-                    <label for="cp_event_city"><strong><?php esc_html_e('City:', 'campaign-office-core'); ?></strong></label><br>
+                    <label for="cp_event_city"><strong><?php esc_html_e('City:', 'campaignpress-core'); ?></strong></label><br>
                     <input type="text" id="cp_event_city" name="cp_event_city" value="<?php echo esc_attr($city); ?>" class="widefat">
                 </p>
                 <p>
-                    <label for="cp_event_state"><strong><?php esc_html_e('State:', 'campaign-office-core'); ?></strong></label><br>
+                    <label for="cp_event_state"><strong><?php esc_html_e('State:', 'campaignpress-core'); ?></strong></label><br>
                     <input type="text" id="cp_event_state" name="cp_event_state" value="<?php echo esc_attr($state); ?>" class="widefat">
                 </p>
                 <p>
-                    <label for="cp_event_zip"><strong><?php esc_html_e('ZIP:', 'campaign-office-core'); ?></strong></label><br>
+                    <label for="cp_event_zip"><strong><?php esc_html_e('ZIP:', 'campaignpress-core'); ?></strong></label><br>
                     <input type="text" id="cp_event_zip" name="cp_event_zip" value="<?php echo esc_attr($zip); ?>" class="widefat">
                 </p>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                 <p>
-                    <label for="cp_event_latitude"><strong><?php esc_html_e('Latitude (optional):', 'campaign-office-core'); ?></strong></label><br>
+                    <label for="cp_event_latitude"><strong><?php esc_html_e('Latitude (optional):', 'campaignpress-core'); ?></strong></label><br>
                     <input type="text" id="cp_event_latitude" name="cp_event_latitude" value="<?php echo esc_attr($lat); ?>" class="widefat">
                 </p>
                 <p>
-                    <label for="cp_event_longitude"><strong><?php esc_html_e('Longitude (optional):', 'campaign-office-core'); ?></strong></label><br>
+                    <label for="cp_event_longitude"><strong><?php esc_html_e('Longitude (optional):', 'campaignpress-core'); ?></strong></label><br>
                     <input type="text" id="cp_event_longitude" name="cp_event_longitude" value="<?php echo esc_attr($lng); ?>" class="widefat">
                 </p>
             </div>
             <p class="description">
-                <?php esc_html_e('Coordinates are optional. If provided, a Google Map will be displayed automatically.', 'campaign-office-core'); ?>
+                <?php esc_html_e('Coordinates are optional. If provided, a Google Map will be displayed automatically.', 'campaignpress-core'); ?>
             </p>
         </div>
         <?php
@@ -181,18 +181,18 @@ class CP_Event_Calendar_Enhancements {
         ?>
         <div class="cp-event-calendar" data-view="<?php echo esc_attr($atts['view']); ?>">
             <div class="cp-calendar-header">
-                <button class="cp-calendar-prev" aria-label="<?php esc_attr_e('Previous', 'campaign-office-core'); ?>">
+                <button class="cp-calendar-prev" aria-label="<?php esc_attr_e('Previous', 'campaignpress-core'); ?>">
                     <span class="dashicons dashicons-arrow-left-alt2"></span>
                 </button>
                 <h2 class="cp-calendar-title"></h2>
-                <button class="cp-calendar-next" aria-label="<?php esc_attr_e('Next', 'campaign-office-core'); ?>">
+                <button class="cp-calendar-next" aria-label="<?php esc_attr_e('Next', 'campaignpress-core'); ?>">
                     <span class="dashicons dashicons-arrow-right-alt2"></span>
                 </button>
             </div>
             <div class="cp-calendar-view-switcher">
-                <button class="cp-view-btn" data-view="month"><?php esc_html_e('Month', 'campaign-office-core'); ?></button>
-                <button class="cp-view-btn" data-view="week"><?php esc_html_e('Week', 'campaign-office-core'); ?></button>
-                <button class="cp-view-btn" data-view="list"><?php esc_html_e('List', 'campaign-office-core'); ?></button>
+                <button class="cp-view-btn" data-view="month"><?php esc_html_e('Month', 'campaignpress-core'); ?></button>
+                <button class="cp-view-btn" data-view="week"><?php esc_html_e('Week', 'campaignpress-core'); ?></button>
+                <button class="cp-view-btn" data-view="list"><?php esc_html_e('List', 'campaignpress-core'); ?></button>
             </div>
             <div class="cp-calendar-body">
                 <?php echo $this->render_calendar_view($atts['view'], current_time('Y-m')); ?>
@@ -229,13 +229,13 @@ class CP_Event_Calendar_Enhancements {
         ?>
         <div class="cp-calendar-month">
             <div class="cp-calendar-weekdays">
-                <div class="cp-weekday"><?php esc_html_e('Sun', 'campaign-office-core'); ?></div>
-                <div class="cp-weekday"><?php esc_html_e('Mon', 'campaign-office-core'); ?></div>
-                <div class="cp-weekday"><?php esc_html_e('Tue', 'campaign-office-core'); ?></div>
-                <div class="cp-weekday"><?php esc_html_e('Wed', 'campaign-office-core'); ?></div>
-                <div class="cp-weekday"><?php esc_html_e('Thu', 'campaign-office-core'); ?></div>
-                <div class="cp-weekday"><?php esc_html_e('Fri', 'campaign-office-core'); ?></div>
-                <div class="cp-weekday"><?php esc_html_e('Sat', 'campaign-office-core'); ?></div>
+                <div class="cp-weekday"><?php esc_html_e('Sun', 'campaignpress-core'); ?></div>
+                <div class="cp-weekday"><?php esc_html_e('Mon', 'campaignpress-core'); ?></div>
+                <div class="cp-weekday"><?php esc_html_e('Tue', 'campaignpress-core'); ?></div>
+                <div class="cp-weekday"><?php esc_html_e('Wed', 'campaignpress-core'); ?></div>
+                <div class="cp-weekday"><?php esc_html_e('Thu', 'campaignpress-core'); ?></div>
+                <div class="cp-weekday"><?php esc_html_e('Fri', 'campaignpress-core'); ?></div>
+                <div class="cp-weekday"><?php esc_html_e('Sat', 'campaignpress-core'); ?></div>
             </div>
             <div class="cp-calendar-days">
                 <?php
@@ -265,7 +265,7 @@ class CP_Event_Calendar_Enhancements {
                                 <?php endforeach; ?>
                                 <?php if (count($day_events) > 3) : ?>
                                     <span class="cp-more-events">
-                                        <?php printf(esc_html__('+ %d more', 'campaign-office-core'), count($day_events) - 3); ?>
+                                        <?php printf(esc_html__('+ %d more', 'campaignpress-core'), count($day_events) - 3); ?>
                                     </span>
                                 <?php endif; ?>
                             </div>
@@ -287,7 +287,7 @@ class CP_Event_Calendar_Enhancements {
         ob_start();
         ?>
         <div class="cp-calendar-week">
-            <p><?php esc_html_e('Week view: showing events for the current week', 'campaign-office-core'); ?></p>
+            <p><?php esc_html_e('Week view: showing events for the current week', 'campaignpress-core'); ?></p>
             <?php echo $this->render_list_view($events); ?>
         </div>
         <?php
@@ -299,7 +299,7 @@ class CP_Event_Calendar_Enhancements {
      */
     private function render_list_view($events) {
         if (empty($events)) {
-            return '<p class="cp-no-events">' . esc_html__('No events found for this period.', 'campaign-office-core') . '</p>';
+            return '<p class="cp-no-events">' . esc_html__('No events found for this period.', 'campaignpress-core') . '</p>';
         }
 
         ob_start();
@@ -373,7 +373,7 @@ class CP_Event_Calendar_Enhancements {
         $state = get_post_meta($atts['event_id'], '_cp_event_state', true);
 
         if (empty($lat) || empty($lng)) {
-            return '<p class="cp-map-notice">' . esc_html__('Location coordinates not available for this event.', 'campaign-office-core') . '</p>';
+            return '<p class="cp-map-notice">' . esc_html__('Location coordinates not available for this event.', 'campaignpress-core') . '</p>';
         }
 
         $full_address = implode(', ', array_filter(array($venue, $address, $city, $state)));
@@ -401,7 +401,7 @@ class CP_Event_Calendar_Enhancements {
                 <?php echo esc_html($full_address); ?>
                 <br>
                 <a href="<?php echo esc_url($google_maps_url); ?>" target="_blank" rel="noopener">
-                    <?php esc_html_e('Get Directions', 'campaign-office-core'); ?>
+                    <?php esc_html_e('Get Directions', 'campaignpress-core'); ?>
                 </a>
             </p>
         </div>
@@ -487,7 +487,7 @@ class CP_Event_Calendar_Enhancements {
         $button = sprintf(
             '<p class="cp-ical-download"><a href="%s" class="button">%s</a></p>',
             esc_url($download_url),
-            esc_html__('Add to Calendar (iCal)', 'campaign-office-core')
+            esc_html__('Add to Calendar (iCal)', 'campaignpress-core')
         );
 
         return $content . $button;
@@ -499,7 +499,7 @@ class CP_Event_Calendar_Enhancements {
     public function ajax_get_calendar_events() {
         // Verify nonce for security (passed from JavaScript)
         if (!check_ajax_referer('cp_calendar_events', 'nonce', false)) {
-            wp_send_json_error(array('message' => __('Security check failed.', 'campaign-office-core')));
+            wp_send_json_error(array('message' => __('Security check failed.', 'campaignpress-core')));
         }
 
         $view = sanitize_text_field($_POST['view'] ?? 'month');
@@ -516,7 +516,7 @@ class CP_Event_Calendar_Enhancements {
     public function render_admin_calendar_page() {
         ?>
         <div class="wrap">
-            <h1><?php esc_html_e('Event Calendar', 'campaign-office-core'); ?></h1>
+            <h1><?php esc_html_e('Event Calendar', 'campaignpress-core'); ?></h1>
             <?php echo do_shortcode('[cp_event_calendar]'); ?>
         </div>
         <?php

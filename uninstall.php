@@ -1,11 +1,11 @@
 <?php
 /**
- * Uninstall Campaign Office Core
+ * Uninstall CampaignPress Core
  *
  * This file runs when the plugin is deleted via WordPress admin.
  * It cleans up all database tables and options created by the plugin.
  *
- * @package Campaign_Office_Core
+ * @package CampaignPress_Core
  * @since 1.0.0
  */
 

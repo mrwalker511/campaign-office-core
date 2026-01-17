@@ -1,19 +1,19 @@
 <?php
 /**
- * Plugin Name: Campaign Office Core
- * Plugin URI: https://github.com/mrwalker511/campaign-office-core
- * Description: Core functionality for the Campaign Office theme. Provides custom post types, volunteer management, event management, and campaign-specific features that persist across theme changes.
+ * Plugin Name: CampaignPress Core
+ * Plugin URI: https://github.com/mrwalker511/campaignpress-core
+ * Description: Core functionality for the CampaignPress theme. Provides custom post types, volunteer management, event management, and campaign-specific features that persist across theme changes.
  * Version: 2.0.0
  * Author: Matt Walker
  * Author URI: https://github.com/mrwalker511
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: campaign-office-core
+ * Text Domain: campaignpress-core
  * Domain Path: /languages
  * Requires at least: 5.8
  * Requires PHP: 7.4
  *
- * @package Campaign_Office_Core
+ * @package CampaignPress_Core
  */
 
 // Exit if accessed directly
@@ -22,11 +22,11 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Main Campaign Office Core Plugin Class
+ * Main CampaignPress Core Plugin Class
  *
  * @since 1.0.0
  */
-class Campaign_Office_Core {
+class CampaignPress_Core {
 
     /**
      * Plugin version
@@ -38,7 +38,7 @@ class Campaign_Office_Core {
     /**
      * Singleton instance
      *
-     * @var Campaign_Office_Core
+     * @var CampaignPress_Core
      */
     private static $instance = null;
 
@@ -59,7 +59,7 @@ class Campaign_Office_Core {
     /**
      * Get singleton instance
      *
-     * @return Campaign_Office_Core
+     * @return CampaignPress_Core
      */
     public static function instance() {
         if (is_null(self::$instance)) {
@@ -84,10 +84,10 @@ class Campaign_Office_Core {
      * Define plugin constants
      */
     private function define_constants() {
-        define('CAMPAIGN_OFFICE_CORE_VERSION', self::VERSION);
-        define('CAMPAIGN_OFFICE_CORE_PLUGIN_DIR', $this->plugin_path);
-        define('CAMPAIGN_OFFICE_CORE_PLUGIN_URL', $this->plugin_url);
-        define('CAMPAIGN_OFFICE_CORE_INCLUDES_DIR', $this->plugin_path . 'includes/');
+        define('CAMPAIGNPRESS_CORE_VERSION', self::VERSION);
+        define('CAMPAIGNPRESS_CORE_PLUGIN_DIR', $this->plugin_path);
+        define('CAMPAIGNPRESS_CORE_PLUGIN_URL', $this->plugin_url);
+        define('CAMPAIGNPRESS_CORE_INCLUDES_DIR', $this->plugin_path . 'includes/');
     }
 
     /**
@@ -113,13 +113,13 @@ class Campaign_Office_Core {
      */
     private function includes() {
         // Contact manager must load first (other modules depend on it)
-        require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'contact-manager.php';
+        require_once CAMPAIGNPRESS_CORE_INCLUDES_DIR . 'contact-manager.php';
 
         // Core functionality files
-        require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'custom-post-types.php';
-        require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'volunteer-management.php';
-        require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'event-management.php';
-        require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'event-calendar-enhancements.php';
+        require_once CAMPAIGNPRESS_CORE_INCLUDES_DIR . 'custom-post-types.php';
+        require_once CAMPAIGNPRESS_CORE_INCLUDES_DIR . 'volunteer-management.php';
+        require_once CAMPAIGNPRESS_CORE_INCLUDES_DIR . 'event-management.php';
+        require_once CAMPAIGNPRESS_CORE_INCLUDES_DIR . 'event-calendar-enhancements.php';
     }
 
     /**
@@ -129,7 +129,7 @@ class Campaign_Office_Core {
      */
     public function activate() {
         // Include files needed for activation
-        require_once CAMPAIGN_OFFICE_CORE_INCLUDES_DIR . 'custom-post-types.php';
+        require_once CAMPAIGNPRESS_CORE_INCLUDES_DIR . 'custom-post-types.php';
 
         // Flush rewrite rules
         flush_rewrite_rules();
@@ -153,7 +153,7 @@ class Campaign_Office_Core {
      */
     public function load_textdomain() {
         load_plugin_textdomain(
-            'campaign-office-core',
+            'campaignpress-core',
             false,
             dirname(plugin_basename(__FILE__)) . '/languages/'
         );
@@ -166,7 +166,7 @@ class Campaign_Office_Core {
      */
     public function theme_integration() {
         /**
-         * Fires when Campaign Office Core plugin is loaded
+         * Fires when CampaignPress Core plugin is loaded
          *
          * Allows themes to hook into plugin functionality
          *
@@ -247,21 +247,21 @@ class Campaign_Office_Core {
         }
         
         wp_enqueue_style(
-            'campaign-office-core',
+            'campaignpress-core',
             $this->plugin_url . 'assets/css/frontend.css',
             array(),
             self::VERSION
         );
 
         wp_enqueue_script(
-            'campaign-office-core',
+            'campaignpress-core',
             $this->plugin_url . 'assets/js/frontend.js',
             array('jquery'),
             self::VERSION,
             true
         );
 
-        wp_localize_script('campaign-office-core', 'campaignOfficeCore', array(
+        wp_localize_script('campaignpress-core', 'campaignOfficeCore', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'calendarNonce' => wp_create_nonce('cp_calendar_events')
         ));
@@ -271,10 +271,10 @@ class Campaign_Office_Core {
 /**
  * Initialize the plugin
  *
- * @return Campaign_Office_Core
+ * @return CampaignPress_Core
  */
 function campaign_office_core() {
-    return Campaign_Office_Core::instance();
+    return CampaignPress_Core::instance();
 }
 
 // Kick off the plugin

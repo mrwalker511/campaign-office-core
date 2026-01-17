@@ -4,7 +4,7 @@
  *
  * Provides RSVP capture, recurring events, and event analytics for the free version.
  *
- * @package Campaign_Office_Core
+ * @package CampaignPress_Core
  * @since 2.0.0
  */
 
@@ -93,7 +93,7 @@ class CP_Event_Manager {
     public function add_event_meta_boxes() {
         add_meta_box(
             'cp_event_rsvp_settings',
-            __('RSVP Settings', 'campaign-office-core'),
+            __('RSVP Settings', 'campaignpress-core'),
             array($this, 'render_rsvp_settings_meta_box'),
             'cp_event',
             'side',
@@ -102,7 +102,7 @@ class CP_Event_Manager {
 
         add_meta_box(
             'cp_event_recurring',
-            __('Recurring Event Settings', 'campaign-office-core'),
+            __('Recurring Event Settings', 'campaignpress-core'),
             array($this, 'render_recurring_meta_box'),
             'cp_event',
             'side',
@@ -111,7 +111,7 @@ class CP_Event_Manager {
 
         add_meta_box(
             'cp_event_capacity',
-            __('Event Capacity', 'campaign-office-core'),
+            __('Event Capacity', 'campaignpress-core'),
             array($this, 'render_capacity_meta_box'),
             'cp_event',
             'side',
@@ -132,17 +132,17 @@ class CP_Event_Manager {
         <p>
             <label>
                 <input type="checkbox" name="cp_rsvp_enabled" value="1" <?php checked($rsvp_enabled, '1'); ?>>
-                <?php esc_html_e('Enable RSVP for this event', 'campaign-office-core'); ?>
+                <?php esc_html_e('Enable RSVP for this event', 'campaignpress-core'); ?>
             </label>
         </p>
         <p>
-            <label for="cp_rsvp_deadline"><strong><?php esc_html_e('RSVP Deadline:', 'campaign-office-core'); ?></strong></label><br>
+            <label for="cp_rsvp_deadline"><strong><?php esc_html_e('RSVP Deadline:', 'campaignpress-core'); ?></strong></label><br>
             <input type="datetime-local" id="cp_rsvp_deadline" name="cp_rsvp_deadline" value="<?php echo esc_attr($rsvp_deadline); ?>" style="width: 100%;">
         </p>
         <p>
             <label>
                 <input type="checkbox" name="cp_collect_dietary" value="1" <?php checked($collect_dietary, '1'); ?>>
-                <?php esc_html_e('Collect dietary restrictions', 'campaign-office-core'); ?>
+                <?php esc_html_e('Collect dietary restrictions', 'campaignpress-core'); ?>
             </label>
         </p>
         <?php
@@ -161,24 +161,24 @@ class CP_Event_Manager {
         <p>
             <label>
                 <input type="checkbox" name="cp_is_recurring" value="1" <?php checked($is_recurring, '1'); ?>>
-                <?php esc_html_e('This is a recurring event', 'campaign-office-core'); ?>
+                <?php esc_html_e('This is a recurring event', 'campaignpress-core'); ?>
             </label>
         </p>
         <p>
-            <label for="cp_recurrence_pattern"><strong><?php esc_html_e('Recurrence:', 'campaign-office-core'); ?></strong></label><br>
+            <label for="cp_recurrence_pattern"><strong><?php esc_html_e('Recurrence:', 'campaignpress-core'); ?></strong></label><br>
             <select id="cp_recurrence_pattern" name="cp_recurrence_pattern" style="width: 100%;">
-                <option value="daily" <?php selected($recurrence_pattern, 'daily'); ?>><?php esc_html_e('Daily', 'campaign-office-core'); ?></option>
-                <option value="weekly" <?php selected($recurrence_pattern, 'weekly'); ?>><?php esc_html_e('Weekly', 'campaign-office-core'); ?></option>
-                <option value="biweekly" <?php selected($recurrence_pattern, 'biweekly'); ?>><?php esc_html_e('Bi-weekly', 'campaign-office-core'); ?></option>
-                <option value="monthly" <?php selected($recurrence_pattern, 'monthly'); ?>><?php esc_html_e('Monthly', 'campaign-office-core'); ?></option>
+                <option value="daily" <?php selected($recurrence_pattern, 'daily'); ?>><?php esc_html_e('Daily', 'campaignpress-core'); ?></option>
+                <option value="weekly" <?php selected($recurrence_pattern, 'weekly'); ?>><?php esc_html_e('Weekly', 'campaignpress-core'); ?></option>
+                <option value="biweekly" <?php selected($recurrence_pattern, 'biweekly'); ?>><?php esc_html_e('Bi-weekly', 'campaignpress-core'); ?></option>
+                <option value="monthly" <?php selected($recurrence_pattern, 'monthly'); ?>><?php esc_html_e('Monthly', 'campaignpress-core'); ?></option>
             </select>
         </p>
         <p>
-            <label for="cp_recurrence_end_date"><strong><?php esc_html_e('Repeat until:', 'campaign-office-core'); ?></strong></label><br>
+            <label for="cp_recurrence_end_date"><strong><?php esc_html_e('Repeat until:', 'campaignpress-core'); ?></strong></label><br>
             <input type="date" id="cp_recurrence_end_date" name="cp_recurrence_end_date" value="<?php echo esc_attr($recurrence_end_date); ?>" style="width: 100%;">
         </p>
         <p class="description">
-            <?php esc_html_e('Note: Recurring events will be automatically generated when you save this event.', 'campaign-office-core'); ?>
+            <?php esc_html_e('Note: Recurring events will be automatically generated when you save this event.', 'campaignpress-core'); ?>
         </p>
         <?php
     }
@@ -193,14 +193,14 @@ class CP_Event_Manager {
         $current_rsvps = $this->get_event_rsvp_count($post->ID);
         ?>
         <p>
-            <label for="cp_max_capacity"><strong><?php esc_html_e('Maximum Capacity:', 'campaign-office-core'); ?></strong></label><br>
+            <label for="cp_max_capacity"><strong><?php esc_html_e('Maximum Capacity:', 'campaignpress-core'); ?></strong></label><br>
             <input type="number" id="cp_max_capacity" name="cp_max_capacity" value="<?php echo esc_attr($max_capacity); ?>" min="0" style="width: 100%;">
         </p>
         <?php if ($current_rsvps > 0) : ?>
             <p>
-                <strong><?php esc_html_e('Current RSVPs:', 'campaign-office-core'); ?></strong> <?php echo esc_html($current_rsvps); ?><br>
+                <strong><?php esc_html_e('Current RSVPs:', 'campaignpress-core'); ?></strong> <?php echo esc_html($current_rsvps); ?><br>
                 <?php if ($max_capacity && $current_rsvps >= $max_capacity) : ?>
-                    <span style="color: #dc3232;"><?php esc_html_e('Event is at capacity!', 'campaign-office-core'); ?></span>
+                    <span style="color: #dc3232;"><?php esc_html_e('Event is at capacity!', 'campaignpress-core'); ?></span>
                 <?php endif; ?>
             </p>
         <?php endif; ?>
@@ -334,7 +334,7 @@ class CP_Event_Manager {
     public function render_rsvp_form($atts) {
         $atts = shortcode_atts(array(
             'event_id' => get_the_ID(),
-            'title' => __('RSVP for this Event', 'campaign-office-core'),
+            'title' => __('RSVP for this Event', 'campaignpress-core'),
         ), $atts);
 
         $event_id = absint($atts['event_id']);
@@ -342,7 +342,7 @@ class CP_Event_Manager {
         // Check if RSVP is enabled
         $rsvp_enabled = get_post_meta($event_id, '_cp_rsvp_enabled', true);
         if ($rsvp_enabled !== '1') {
-            return '<p>' . esc_html__('RSVP is not enabled for this event.', 'campaign-office-core') . '</p>';
+            return '<p>' . esc_html__('RSVP is not enabled for this event.', 'campaignpress-core') . '</p>';
         }
 
         // Check capacity
@@ -350,7 +350,7 @@ class CP_Event_Manager {
         $current_rsvps = $this->get_event_rsvp_count($event_id);
 
         if ($max_capacity && $current_rsvps >= $max_capacity) {
-            return '<p class="cp-event-full">' . esc_html__('This event is at full capacity.', 'campaign-office-core') . '</p>';
+            return '<p class="cp-event-full">' . esc_html__('This event is at full capacity.', 'campaignpress-core') . '</p>';
         }
 
         $collect_dietary = get_post_meta($event_id, '_cp_collect_dietary', true);
@@ -363,7 +363,7 @@ class CP_Event_Manager {
             <?php if ($max_capacity) : ?>
                 <p class="cp-capacity-info">
                     <?php printf(
-                        esc_html__('Spots remaining: %d of %d', 'campaign-office-core'),
+                        esc_html__('Spots remaining: %d of %d', 'campaignpress-core'),
                         max(0, $max_capacity - $current_rsvps),
                         $max_capacity
                     ); ?>
@@ -375,43 +375,43 @@ class CP_Event_Manager {
 
                 <div class="cp-form-row">
                     <div class="cp-form-group">
-                        <label for="cp_rsvp_first_name"><?php esc_html_e('First Name', 'campaign-office-core'); ?> <span class="required">*</span></label>
+                        <label for="cp_rsvp_first_name"><?php esc_html_e('First Name', 'campaignpress-core'); ?> <span class="required">*</span></label>
                         <input type="text" id="cp_rsvp_first_name" name="first_name" required>
                     </div>
 
                     <div class="cp-form-group">
-                        <label for="cp_rsvp_last_name"><?php esc_html_e('Last Name', 'campaign-office-core'); ?> <span class="required">*</span></label>
+                        <label for="cp_rsvp_last_name"><?php esc_html_e('Last Name', 'campaignpress-core'); ?> <span class="required">*</span></label>
                         <input type="text" id="cp_rsvp_last_name" name="last_name" required>
                     </div>
                 </div>
 
                 <div class="cp-form-row">
                     <div class="cp-form-group">
-                        <label for="cp_rsvp_email"><?php esc_html_e('Email', 'campaign-office-core'); ?> <span class="required">*</span></label>
+                        <label for="cp_rsvp_email"><?php esc_html_e('Email', 'campaignpress-core'); ?> <span class="required">*</span></label>
                         <input type="email" id="cp_rsvp_email" name="email" required>
                     </div>
 
                     <div class="cp-form-group">
-                        <label for="cp_rsvp_phone"><?php esc_html_e('Phone', 'campaign-office-core'); ?></label>
+                        <label for="cp_rsvp_phone"><?php esc_html_e('Phone', 'campaignpress-core'); ?></label>
                         <input type="tel" id="cp_rsvp_phone" name="phone">
                     </div>
                 </div>
 
                 <div class="cp-form-group">
-                    <label for="cp_rsvp_guests"><?php esc_html_e('Number of guests (including yourself):', 'campaign-office-core'); ?></label>
+                    <label for="cp_rsvp_guests"><?php esc_html_e('Number of guests (including yourself):', 'campaignpress-core'); ?></label>
                     <input type="number" id="cp_rsvp_guests" name="guests" value="1" min="1" max="10">
                 </div>
 
                 <?php if ($collect_dietary === '1') : ?>
                     <div class="cp-form-group">
-                        <label for="cp_rsvp_dietary"><?php esc_html_e('Dietary Restrictions:', 'campaign-office-core'); ?></label>
+                        <label for="cp_rsvp_dietary"><?php esc_html_e('Dietary Restrictions:', 'campaignpress-core'); ?></label>
                         <textarea id="cp_rsvp_dietary" name="dietary_restrictions" rows="2"></textarea>
                     </div>
                 <?php endif; ?>
 
                 <div class="cp-form-message"></div>
 
-                <button type="submit" class="cp-rsvp-submit-btn"><?php esc_html_e('Submit RSVP', 'campaign-office-core'); ?></button>
+                <button type="submit" class="cp-rsvp-submit-btn"><?php esc_html_e('Submit RSVP', 'campaignpress-core'); ?></button>
             </form>
         </div>
 
@@ -427,14 +427,14 @@ class CP_Event_Manager {
     public function handle_event_rsvp() {
         // Verify nonce
         if (!isset($_POST['cp_event_rsvp_nonce']) || !wp_verify_nonce($_POST['cp_event_rsvp_nonce'], 'cp_event_rsvp')) {
-            wp_send_json_error(array('message' => __('Security verification failed.', 'campaign-office-core')));
+            wp_send_json_error(array('message' => __('Security verification failed.', 'campaignpress-core')));
         }
 
         $event_id = absint($_POST['event_id'] ?? 0);
 
         // Validate event
         if (!$event_id || get_post_type($event_id) !== 'cp_event') {
-            wp_send_json_error(array('message' => __('Invalid event.', 'campaign-office-core')));
+            wp_send_json_error(array('message' => __('Invalid event.', 'campaignpress-core')));
         }
 
         // Check capacity
@@ -443,7 +443,7 @@ class CP_Event_Manager {
         $guests = absint($_POST['guests'] ?? 1);
 
         if ($max_capacity && ($current_rsvps + $guests) > $max_capacity) {
-            wp_send_json_error(array('message' => __('Sorry, this event is at full capacity.', 'campaign-office-core')));
+            wp_send_json_error(array('message' => __('Sorry, this event is at full capacity.', 'campaignpress-core')));
         }
 
         $first_name = sanitize_text_field($_POST['first_name'] ?? '');
@@ -452,7 +452,7 @@ class CP_Event_Manager {
 
         // Validate required fields
         if (empty($first_name) || empty($last_name) || empty($email)) {
-            wp_send_json_error(array('message' => __('Please fill in all required fields.', 'campaign-office-core')));
+            wp_send_json_error(array('message' => __('Please fill in all required fields.', 'campaignpress-core')));
         }
 
         // Identify or Create Contact
@@ -491,11 +491,11 @@ class CP_Event_Manager {
             do_action('cp_event_rsvp_success', $wpdb->insert_id, $rsvp_data);
 
             wp_send_json_success(array(
-                'message' => __('Thank you for your RSVP! We look forward to seeing you.', 'campaign-office-core'),
+                'message' => __('Thank you for your RSVP! We look forward to seeing you.', 'campaignpress-core'),
                 'rsvp_id' => $wpdb->insert_id
             ));
         } else {
-            wp_send_json_error(array('message' => __('Failed to save RSVP. Please try again.', 'campaign-office-core')));
+            wp_send_json_error(array('message' => __('Failed to save RSVP. Please try again.', 'campaignpress-core')));
         }
     }
 
@@ -516,8 +516,8 @@ class CP_Event_Manager {
     public function add_admin_menu() {
         add_submenu_page(
             'edit.php?post_type=cp_event',
-            __('Event RSVPs', 'campaign-office-core'),
-            __('RSVPs', 'campaign-office-core'),
+            __('Event RSVPs', 'campaignpress-core'),
+            __('RSVPs', 'campaignpress-core'),
             'edit_posts',
             'cp-event-rsvps',
             array($this, 'render_rsvps_admin_page')
@@ -557,42 +557,42 @@ class CP_Event_Manager {
 
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline"><?php esc_html_e('Event RSVPs', 'campaign-office-core'); ?></h1>
-            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=cp_export_event_rsvps&event_id=' . $event_filter), 'cp_export_event_rsvps')); ?>" class="page-title-action"><?php esc_html_e('Export to CSV', 'campaign-office-core'); ?></a>
+            <h1 class="wp-heading-inline"><?php esc_html_e('Event RSVPs', 'campaignpress-core'); ?></h1>
+            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=cp_export_event_rsvps&event_id=' . $event_filter), 'cp_export_event_rsvps')); ?>" class="page-title-action"><?php esc_html_e('Export to CSV', 'campaignpress-core'); ?></a>
 
             <hr class="wp-header-end">
 
             <form method="get" style="margin: 20px 0;">
                 <input type="hidden" name="post_type" value="cp_event">
                 <input type="hidden" name="page" value="cp-event-rsvps">
-                <label for="event-filter"><?php esc_html_e('Filter by Event:', 'campaign-office-core'); ?></label>
+                <label for="event-filter"><?php esc_html_e('Filter by Event:', 'campaignpress-core'); ?></label>
                 <select name="event_id" id="event-filter">
-                    <option value="0"><?php esc_html_e('All Events', 'campaign-office-core'); ?></option>
+                    <option value="0"><?php esc_html_e('All Events', 'campaignpress-core'); ?></option>
                     <?php foreach ($events as $event) : ?>
                         <option value="<?php echo esc_attr($event->ID); ?>" <?php selected($event_filter, $event->ID); ?>>
                             <?php echo esc_html($event->post_title); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <input type="submit" class="button" value="<?php esc_attr_e('Filter', 'campaign-office-core'); ?>">
+                <input type="submit" class="button" value="<?php esc_attr_e('Filter', 'campaignpress-core'); ?>">
             </form>
 
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Name', 'campaign-office-core'); ?></th>
-                        <th><?php esc_html_e('Email', 'campaign-office-core'); ?></th>
-                        <th><?php esc_html_e('Phone', 'campaign-office-core'); ?></th>
-                        <th><?php esc_html_e('Event', 'campaign-office-core'); ?></th>
-                        <th><?php esc_html_e('Guests', 'campaign-office-core'); ?></th>
-                        <th><?php esc_html_e('Status', 'campaign-office-core'); ?></th>
-                        <th><?php esc_html_e('Date', 'campaign-office-core'); ?></th>
+                        <th><?php esc_html_e('Name', 'campaignpress-core'); ?></th>
+                        <th><?php esc_html_e('Email', 'campaignpress-core'); ?></th>
+                        <th><?php esc_html_e('Phone', 'campaignpress-core'); ?></th>
+                        <th><?php esc_html_e('Event', 'campaignpress-core'); ?></th>
+                        <th><?php esc_html_e('Guests', 'campaignpress-core'); ?></th>
+                        <th><?php esc_html_e('Status', 'campaignpress-core'); ?></th>
+                        <th><?php esc_html_e('Date', 'campaignpress-core'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($rsvps)) : ?>
                         <tr>
-                            <td colspan="7"><?php esc_html_e('No RSVPs found.', 'campaign-office-core'); ?></td>
+                            <td colspan="7"><?php esc_html_e('No RSVPs found.', 'campaignpress-core'); ?></td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($rsvps as $rsvp) : ?>
@@ -618,11 +618,11 @@ class CP_Event_Manager {
      */
     public function export_rsvps_csv() {
         if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'cp_export_event_rsvps')) {
-            wp_die(esc_html__('Security verification failed.', 'campaign-office-core'));
+            wp_die(esc_html__('Security verification failed.', 'campaignpress-core'));
         }
 
         if (!current_user_can('edit_posts')) {
-            wp_die(esc_html__('You do not have permission to export RSVPs.', 'campaign-office-core'));
+            wp_die(esc_html__('You do not have permission to export RSVPs.', 'campaignpress-core'));
         }
 
         global $wpdb;
